@@ -27,26 +27,11 @@ const boardSchema = new Schema(
             },
         ],
 
-        email: {
-            type: String,
-            unique: true,
-        },
-        password: {
-            type: String,
-        },
-        token: {
-            type: String,
-            unique: true,
-        },
-        boards: {
-            type: Array,
-            default: [],
-        },
     },
     {
         timestamps: true,
     }
 );
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+const Board = mongoose.model("Board", boardSchema);
+module.exports = Board;
