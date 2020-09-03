@@ -7,7 +7,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-const User=require('./models/users.model');
+const User=require('./models/user.model');
 const {uri, dbName} = require("./configs/db.config");
 console.log(uri,dbName)
 
