@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const User=require('./models/user.model');
+const userRoutes=require('./routes/user.routes');
 const {uri, dbName} = require("./configs/db.config");
 console.log(uri,dbName)
 
@@ -36,21 +37,14 @@ changeStream.on("change", change => {
 io.on("connection", function () {
     console.log("connected");
 });
-// const newUser=new User({
-//     fname:"john"
-// }) ;
-// newUser.save((err,doc)=>{ 
-//     console.log(err,doc);
-// })
+
 app.use(express.json());
 app.use(cors());
 app.use(morgan());
-app.get("/",(req,res)=>{
-    User.find((err,docs)=>{
-        io.on("changeData",change=>console.log(change));
-        res.send(docs)
-    })
-})
+// API routes
+app.use("/api/user", userRoutes);
+
+
 http.listen(PORT, err => {
     if (err) throw err;
     else console.log("Connected to PORT : ", PORT);
