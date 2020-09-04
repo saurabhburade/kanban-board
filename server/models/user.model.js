@@ -28,6 +28,7 @@ const userSchema = new Schema(
         boards: {
             type: Array,
             default: [],
+            unique:true
         },
     },
     {
