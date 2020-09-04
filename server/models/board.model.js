@@ -5,6 +5,11 @@ const boardSchema = new Schema(
     {
         title: {
             type: String,
+            required: true,
+        },
+        owner: {
+            type: String,
+            required: true,
         },
         team: {
             type: Array,
@@ -15,6 +20,7 @@ const boardSchema = new Schema(
                 columnName: {
                     type: String,
                     unique: true,
+                    required: true,
                 },
                 tasks: [
                     {
@@ -22,11 +28,11 @@ const boardSchema = new Schema(
                         label: String,
                         description: String,
                         created: Date,
+                        modified: Date,
                     },
                 ],
             },
         ],
-
     },
     {
         timestamps: true,
