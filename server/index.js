@@ -8,7 +8,8 @@ const mongoose = require("mongoose");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const User=require('./models/user.model');
-const userRoutes=require('./routes/user.routes');
+const userRoutes = require("./routes/user.routes");
+const boardRoutes = require("./routes/board.routes");
 const {uri, dbName} = require("./configs/db.config");
 console.log(uri,dbName)
 
@@ -43,6 +44,7 @@ app.use(cors());
 app.use(morgan());
 // API routes
 app.use("/api/user", userRoutes);
+app.use("/api/board", boardRoutes);
 
 
 http.listen(PORT, err => {
