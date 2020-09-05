@@ -5,10 +5,12 @@ import {
     SmileOutlined,
     EditOutlined,
     LogoutOutlined,
+    AppstoreAddOutlined,
 } from "@ant-design/icons";
 import MenuItem from './MenuItem'
 import { connect } from 'react-redux';
 import BoardCard from './BoardCard';
+import { Button } from 'antd';
 function Profile({user}) {
     return (
         <div className="profile-dash-cont">
@@ -28,7 +30,17 @@ function Profile({user}) {
                 </div>
             </div>
             <div className="boards-main-cont">
-                <p>Your Boards</p>
+                <div className="board-title-add-board mt-4">
+                    <p>Your Boards</p>{" "}
+                    <Button
+                        shape="round"
+                        icon={<AppstoreAddOutlined />}
+                        size={"middle"}
+                        className="ml-5"
+                    >
+                        Add New Board 
+                    </Button>
+                </div>
                 <div className="boards-cont">
                     {user?.boards?.map((element, index) => {
                         return <BoardCard name={element.title} />;

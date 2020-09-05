@@ -38,9 +38,18 @@
 .boards-cont{
     display: flex;
 }
-.boards-main-cont >p {
+
+.board-title-add-board{
     font-size: 1.2em;
     /* font-weight: 600; */
+    
+    /* background: orange; */
     color: rgb(126, 126, 126);
-    margin:2%;
+    margin:1% 2%;
+    display: flex;
+    justify-content: flex-start;
+}
+.board-title-add-board > p:nth-child(2){
+    margin:0% 5%;
+    
 }
