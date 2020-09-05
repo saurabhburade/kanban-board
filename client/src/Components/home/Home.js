@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import image from "../../assets/chat1.svg";
 import chatimage from "../../assets/chat1.JPG";
 import "./home.css";
-import {Steps, Tooltip,Button as AntButton} from "antd";
+import {Steps, Tooltip, Button as AntButton} from "antd";
 import {Link} from "react-router-dom";
 import {isAuth} from "../../Utils/auth";
-import reactIcon from "../../assets/reactjs.svg"
+import reactIcon from "../../assets/reactjs.svg";
 import reduxIcon from "../../assets/redux.svg";
 import nodeIcon from "../../assets/nodejs.svg";
 import expreeIcon from "../../assets/express.svg";
@@ -14,7 +14,8 @@ import bootstrapIcon from "../../assets/bootstrap.svg";
 import antIcon from "../../assets/ant.svg";
 import firebaseIcon from "../../assets/firebase.svg";
 import {GithubOutlined} from "@ant-design/icons";
-import WOW from "wowjs"
+import "animate.css";
+import WOW from "wowjs";
 new WOW.WOW().init();
 const {Step} = Steps;
 function Home() {
