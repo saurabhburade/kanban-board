@@ -11,7 +11,7 @@ export const login = data => {
             console.log(res);
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("_id", res.data._id);
-            window.location.href = "/chat";
+            window.location.href = "/dashboard";
         })
         .catch(err => {
             console.log(err);
@@ -29,7 +29,7 @@ export const signup = data => {
             console.log(res)
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("_id", res.data._id);
-            window.location.href = "/chat";
+            window.location.href = "/dashboard";
         })
         .catch(err => {
             console.log(err);
