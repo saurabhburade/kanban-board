@@ -22,19 +22,18 @@ function Header() {
                  }
              })}
     return (
-        <div className={`header ${Scroll?"sticky":""}`}>
+        <div className={`header ${Scroll ? "sticky" : ""}`}>
             <div className="logo">
                 <p>LOGO 🚀 </p>
             </div>
             <div className="nav-links">
-
                 <Link className="navLink" to={"/"}>
                     Home
                 </Link>
                 {isAuth() ? (
                     <>
-                        <Link className="navLink" to={"/chat"}>
-                            Chat
+                        <Link className="navLink" to={"/dashboard"}>
+                            Dashboard
                         </Link>
                         <Link
                             className="navLink"
@@ -54,7 +53,6 @@ function Header() {
                         </Link>
                     </>
                 )}
-
             </div>
         </div>
     );
