@@ -2,7 +2,7 @@ import Axios from "axios";
 
 export const login = data => {
     console.log(data);
-    Axios.post("http://localhost:8000/api/user/login", data, {
+    Axios.post("/api/user/login", data, {
         headers: {
             "Content-type": "application/json",
         },
@@ -20,7 +20,7 @@ export const login = data => {
 };
 
 export const signup = data => {
-    Axios.post("http://localhost:8000/api/user/register", data, {
+    Axios.post("/api/user/register", data, {
         headers: {
             "Content-type": "application/json",
         },
