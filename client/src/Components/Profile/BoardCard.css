@@ -1,0 +1,24 @@
+.p-board-card{
+    width: 20em;
+    height: fit-content;
+    background: white;
+    padding:5%;
+    margin: 2%;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+.p-board-card > p{
+    padding:0em;
+    margin:0em
+}
+.p-board-card > div{
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+}
+.p-board-card > div>* {
+    margin:0% 3%
+}
