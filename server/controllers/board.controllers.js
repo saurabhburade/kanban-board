@@ -22,7 +22,7 @@ const createBoard = (req, res) => {
                                 {email: owner},
                                 {
                                     $push: {
-                                        boards: board._id,
+                                        boards: {_id: board._id, title},
                                     },
                                 }
                             )
@@ -62,6 +62,7 @@ const publicBoard = (req, res) => {
             });
     }
 };
+
 const addColumn = (req, res) => {
     const {_id, columnName} = req.body;
     console.log(req.body);
