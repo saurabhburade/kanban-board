@@ -1,0 +1,36 @@
+.login-container {
+    display: flex;
+    height: 50em;
+    justify-content: center;
+    align-items: center;
+    background-color: azure;
+    padding: 0% 10%;
+    justify-content: space-between;
+}
+.form {
+    background-color: rgb(255, 255, 255);
+    padding: 0% 5%;
+    padding-bottom: 2%;
+    font-weight: 600;
+}
+.form > div {
+    margin: 10% 0%;
+}
+.loginImage {
+    width: 40em;
+}
+
+@media (max-width: 700px) {
+    .login-container {
+        display: flex;
+        height: 40em;
+        justify-content: center;
+        align-items: center;
+        background-color: azure;
+        padding: 0% 10%;
+        justify-content: space-between;
+    }
+    .loginImage {
+        display: none;
+    }
+}
