@@ -55,9 +55,13 @@ function SignUp() {
                         required
                     />
                 </div>{" "}
-                <Button type="submit" size={"sm"}>
-                    Sign Up
-                </Button>
+                <button
+                    className="btn btn-sm bg-primary text-white"
+                    type="submit"
+                    size={"sm"}
+                >
+                    Login
+                </button>
             </form>
             <img src={loginImage} className="loginImage" alt="" />
         </div>

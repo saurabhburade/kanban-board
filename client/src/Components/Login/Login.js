@@ -27,9 +27,9 @@ function Login() {
                     <label htmlFor="password">Password</label>
                     <Input.Password type="password" name="password" required />
                 </div>
-                <Button type="submit" size={"sm"}>
+                <button className="btn btn-sm bg-primary text-white" type="submit" size={"sm"}>
                     Login
-                </Button>
+                </button>
             </form>
             <img src={loginImage} className="loginImage" alt="" />
         </div>
