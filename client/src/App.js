@@ -6,9 +6,12 @@ import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
 import Home from "./Components/home/Home";
 import './App.css';
+import Profile from './Components/Profile/Profile';
+import { fetchUser } from './Redux/user/user.actionCreators';
+import { connect } from 'react-redux';
 const ENDPOINT = "http://127.0.0.1:8000";
 
-function App() {
+function App(props) {
     const [response, setResponse] = useState("");
 
     useEffect(() => {
@@ -18,7 +21,9 @@ function App() {
             console.log(data)
         });
     }, []);
-
+useEffect(() => {
+    props.fetchUser()
+}, [])
        return (
            <Router>
                <div className="App">
@@ -27,10 +32,15 @@ function App() {
                        <Route path="/login" exact component={Login} />
                        <Route path="/" exact component={Home} />
                        <Route path="/register" exact component={SignUp} />
+                       <Route path="/dashboard" exact component={Profile} />
                    </Switch>
                </div>
            </Router>
        );
 }
 
-export default App;
+const mapDispatchToProps =dispatch=> {
+   return { fetchUser:()=>dispatch(fetchUser())}
+}
+
+export default connect(null,mapDispatchToProps)(App);
