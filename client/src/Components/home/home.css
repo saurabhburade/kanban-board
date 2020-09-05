@@ -1,0 +1,118 @@
+.home-container {
+    width: 100%;
+    position: relative;
+    min-height: 90vh;
+    border-radius: 0px 0px 100px 100px;
+    background: rgba(245, 245, 245, 0.774);
+}
+.hero-container {
+    height: 90vh;
+    width: 100%;
+    padding: 0% 10%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: url("../../assets/wave.svg") no-repeat;
+    background-position: 0% 120%;
+}
+.hero-image-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.hero-image {
+    width: 35em;
+}
+.hero-text > p:nth-child(1) {
+    padding: 0em;
+    margin: 0em;
+    font-weight: 800;
+    font-size: 4em;
+}
+
+.hero-text > p:nth-child(2) {
+    width: 40em;
+    padding: 0em;
+    margin: 0em;
+    font-weight: 500;
+    font-size: 1.1em;
+}
+.steps {
+    height: 100%;
+    width: 100%;
+    background: white;
+    text-align: center;
+    padding: 0% 10% 5% 10%;
+}
+.steps > h3 {
+    font-weight: 600;
+    padding-bottom: 5%;
+}
+.desc {
+    width: 20em;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.chat-screen {
+    width: 60em;
+    box-shadow: 0px 1px 50px rgb(240, 240, 240);
+    border-radius: 5px;
+}
+.tech-icons-cont {
+    width: 10em;
+    margin: 0% 2%;
+}
+.tech-icons-cont > img {
+    width: 5em;
+    filter: grayscale();
+}
+.tech-cont > h3 {
+    padding-bottom: 3%;
+}
+.tech-cont {
+    padding: 5%;
+}
+@media (max-width: 700px) {
+    .hero-image-cont {
+        display: none;
+    }
+    .hero-container {
+        padding: 1%;
+        height: 70vh;
+        width: 100%;
+        background-position: 0% 100%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+    }
+    .hero-text > p:nth-child(1) {
+        padding: 0em;
+        margin: 0em;
+        font-weight: 800;
+        font-size: 2em;
+    }
+    .hero-text > p:nth-child(2) {
+        width: 100%;
+        padding: 2%;
+        margin: 0em;
+        font-weight: 800;
+        font-size: 0.9em;
+    }
+    .hero-text {
+        width: auto;
+        text-align: center;
+    }
+    .action-btns {
+        transform: scale(0.9);
+        padding: 0px;
+    }
+    .chat-screen {
+        width: 60em;
+        box-shadow: 0px 1px 50px rgb(240, 240, 240);
+        border-radius: 5px;
+        display: none;
+    }
+}
