@@ -24,7 +24,7 @@ function Header() {
     return (
         <div className={`header ${Scroll ? "sticky" : ""}`}>
             <div className="logo">
-                <p>LOGO 🚀 </p>
+                <p>Kanban  🚀 </p>
             </div>
             <div className="nav-links">
                 <Link className="navLink" to={"/"}>
