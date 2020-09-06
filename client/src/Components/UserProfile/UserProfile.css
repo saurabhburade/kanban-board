@@ -1,0 +1,29 @@
+.user-initial>p:nth-child(1){
+    font-size: 2em;
+    
+    background: rgba(181, 54, 255, 0.116);
+    color: rgba(47, 0, 255, 0.87);
+    text-align: center;
+    padding: 20%;
+    border-radius: 10px;
+    margin:0
+}
+.user-profile-cont{
+    padding: 2% 5%;  
+}
+.user-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user-details > p{
+    width: fit-content;
+    white-space: nowrap;
+    padding:10% 20%;
+    margin:1%;
+    border-radius: 5px;
+    border: 1px solid rgb(238, 238, 238);
+    
+    background: rgba(181, 54, 255, 0.055);
+    color: rgba(47, 0, 255, 0.87);
+}

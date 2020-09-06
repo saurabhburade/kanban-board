@@ -1,5 +1,5 @@
-import React from 'react'
-import "./Profile.css"
+import React, {useState} from "react";
+import "./Profile.css";
 import {
     InsertRowAboveOutlined,
     SmileOutlined,
@@ -7,11 +7,13 @@ import {
     LogoutOutlined,
     AppstoreAddOutlined,
 } from "@ant-design/icons";
-import MenuItem from './MenuItem'
-import { connect } from 'react-redux';
-import BoardCard from './BoardCard';
-import { Button } from 'antd';
+import MenuItem from "./MenuItem";
+import {connect} from "react-redux";
+import BoardCard from "./BoardCard";
+import {Button} from "antd";
+import UserProfile from './../UserProfile/UserProfile';
 function Profile({user}) {
+    const [dashView, setDashView] = useState(0);
     return (
         <div className="profile-dash-cont">
             <div className="dash-menu-cont">
@@ -20,16 +22,26 @@ function Profile({user}) {
                     <p>Saurabh Burade</p>
                 </div>
                 <div>
-                    <MenuItem icon={<SmileOutlined />} name="Profile" />
-                    <MenuItem
-                        icon={<InsertRowAboveOutlined />}
-                        name="Your Boards"
-                    />
-                    <MenuItem icon={<EditOutlined />} name="Edit Profile" />
-                    <MenuItem icon={<LogoutOutlined />} name="Logout" />
+                    <div onClick={() => setDashView(0)}>
+                        <MenuItem
+                            icon={<InsertRowAboveOutlined />}
+                            name="Your Boards"
+                        />
+                    </div>
+                    <div onClick={() => setDashView(1)}>
+                        <MenuItem icon={<SmileOutlined />} name="Profile" />
+                    </div>
+                    <div onClick={() => setDashView(2)}>
+                        <MenuItem icon={<EditOutlined />} name="Edit Profile" />
+                    </div>
+                    <div onClick={() => console.log("Logout")}>
+                        <MenuItem icon={<LogoutOutlined />} name="Logout" />
+                    </div>
                 </div>
             </div>
-            <div className="boards-main-cont">
+            {dashView === 0 ? (
+                // <UserProfile />
+             <div className="boards-main-cont">
                 <div className="board-title-add-board mt-4">
                     <p>Your Boards</p>{" "}
                     <Button
@@ -38,7 +50,7 @@ function Profile({user}) {
                         size={"middle"}
                         className="ml-5"
                     >
-                        Add New Board 
+                        Add New Board
                     </Button>
                 </div>
                 <div className="boards-cont">
@@ -47,15 +59,44 @@ function Profile({user}) {
                     })}
                 </div>
             </div>
+            ) :
+            dashView === 1 ? (
+                <UserProfile />
+            ) : (
+                <div className="boards-main-cont">
+                    <Button
+                        shape="round"
+                        icon={<AppstoreAddOutlined />}
+                        size={"middle"}
+                        className="ml-5"
+                    >
+                        Edit profile
+                    </Button>
+                </div>
+            )}
+            {/* <div className="boards-main-cont">
+                <div className="board-title-add-board mt-4">
+                    <p>Your Boards</p>{" "}
+                    <Button
+                        shape="round"
+                        icon={<AppstoreAddOutlined />}
+                        size={"middle"}
+                        className="ml-5"
+                    >
+                        Add New Board
+                    </Button>
+                </div>
+                <div className="boards-cont">
+                    {user?.boards?.map((element, index) => {
+                        return <BoardCard name={element.title} />;
+                    })}
+                </div>
+            </div> */}
         </div>
     );
 }
-const mapStateToProps = (state) => ({
-    user:state.user.user
-})
-
-const mapDispatchToProps =dispatch=> {
-    
-}
+const mapStateToProps = state => ({
+    user: state.user.user,
+});
 
 export default connect(mapStateToProps)(Profile);
