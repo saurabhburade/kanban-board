@@ -37,6 +37,7 @@
 }
 .boards-cont{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .board-title-add-board{

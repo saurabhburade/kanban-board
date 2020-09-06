@@ -12,8 +12,13 @@ import {connect} from "react-redux";
 import BoardCard from "./BoardCard";
 import {Button} from "antd";
 import UserProfile from './../UserProfile/UserProfile';
+import AddBoardModal from './../AddBoard/AddBoardModal';
 function Profile({user}) {
     const [dashView, setDashView] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false)
+    const handleModalCancel=()=>{
+        setModalVisible(false)
+    }
     return (
         <div className="profile-dash-cont">
             <div className="dash-menu-cont">
@@ -41,26 +46,26 @@ function Profile({user}) {
             </div>
             {dashView === 0 ? (
                 // <UserProfile />
-             <div className="boards-main-cont">
-                <div className="board-title-add-board mt-4">
-                    <p>Your Boards</p>{" "}
-                    <Button
-                        shape="round"
-                        icon={<AppstoreAddOutlined />}
-                        size={"middle"}
-                        className="ml-5"
-                    >
-                        Add New Board
-                    </Button>
+                <div className="boards-main-cont">
+                    <div className="board-title-add-board mt-4">
+                        <p>Your Boards</p>{" "}
+                        <Button
+                            shape="round"
+                            icon={<AppstoreAddOutlined />}
+                            size={"middle"}
+                            className="ml-5"
+                            onClick={()=>setModalVisible(true)}
+                        >
+                            Add New Board
+                        </Button>
+                    </div>
+                    <div className="boards-cont">
+                        {user?.boards?.map((element, index) => {
+                            return <BoardCard name={element.title} />;
+                        })}
+                    </div>
                 </div>
-                <div className="boards-cont">
-                    {user?.boards?.map((element, index) => {
-                        return <BoardCard name={element.title} />;
-                    })}
-                </div>
-            </div>
-            ) :
-            dashView === 1 ? (
+            ) : dashView === 1 ? (
                 <UserProfile />
             ) : (
                 <div className="boards-main-cont">
@@ -92,6 +97,7 @@ function Profile({user}) {
                     })}
                 </div>
             </div> */}
+            <AddBoardModal  modalVisible={modalVisible} owner={user?.email} onCancel={handleModalCancel}/>
         </div>
     );
 }
