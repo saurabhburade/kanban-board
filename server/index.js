@@ -7,11 +7,11 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-const User=require('./models/user.model');
+const User = require("./models/user.model");
 const userRoutes = require("./routes/user.routes");
 const boardRoutes = require("./routes/board.routes");
 const {uri, dbName} = require("./configs/db.config");
-console.log(uri,dbName)
+console.log(uri, dbName);
 
 mongoose.connect(
     uri,
@@ -29,23 +29,50 @@ mongoose.connect(
         }
     }
 );
-const changeStream = User.watch();
-console.log(changeStream)
-changeStream.on("change", change => {
-    console.log("change",change); 
-    io.emit('changeData',change)
-});
-io.on("connection", function () {
-    console.log("connected");
-});
 
 app.use(express.json());
 app.use(cors());
 app.use(morgan());
+//socket
+
+io.on("connection", function (socket) {
+    // console.log(changeStream);
+    socket.on("connected", user => {
+        console.log(user);
+        socket.join(user.key, () => {
+            const changeStream = User.watch();
+            changeStream.on("change", change => {
+                console.log(
+                    change.documentKey._id,
+                    user.key,
+                    socket.rooms[user.key],
+                    change.documentKey._id == user.key
+                );
+                if (change.documentKey._id == user.key) {
+                    User.findOne({_id: change.documentKey._id})
+                        .select("-password")
+                        .select("-token")
+                        .then(doc => {
+                            io.to(socket.rooms[user.key]).emit(
+                                "changeData",
+                                doc
+                            );
+                        })
+                        .catch(err => {
+                            console.log("err", err);
+                        });
+                }
+                // console.log("change", change);
+            });
+        });
+    });
+
+    // console.log("connected", client);
+});
+
 // API routes
 app.use("/api/user", userRoutes);
 app.use("/api/board", boardRoutes);
-
 
 http.listen(PORT, err => {
     if (err) throw err;
