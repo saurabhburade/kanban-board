@@ -61,7 +61,12 @@ function Profile({user}) {
                     </div>
                     <div className="boards-cont">
                         {user?.boards?.map((element, index) => {
-                            return <BoardCard name={element.title} />;
+                            return (
+                                <BoardCard
+                                    name={element.title}
+                                    _id={element._id}
+                                />
+                            );
                         })}
                     </div>
                 </div>
