@@ -17,17 +17,19 @@ function App(props) {
 
     useEffect(() => {
         const socket = socketIOClient(ENDPOINT);
-        socket.emit("connected", {key: localStorage.getItem("_id")});
-        socket.on("changeData", data => {
-            setResponse(data);
-            if (!!data) {
-                props.fetchUser();
-            }
-            console.log(data);
-        });
+        if (isAuth()) {
+            socket.emit("connected", {key: localStorage.getItem("_id")});
+            socket.on("changeData", data => {
+                setResponse(data);
+                if (!!data) {
+                    props.fetchUser();
+                }
+                console.log(data);
+            });
+        }
     }, []);
     useEffect(() => {
-        props.fetchUser();
+       isAuth() && props.fetchUser();
     }, []);
     return (
         <Router>
