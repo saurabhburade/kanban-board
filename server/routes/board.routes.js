@@ -6,6 +6,7 @@ const {
     publicBoard,
     addColumn,
     addTask,
+    deleteBoard,
 } = require("../controllers/board.controllers");
 
 //get public board
@@ -13,6 +14,8 @@ router.get("/public/:_id", publicBoard);
 
 //create board
 router.post("/create", createBoard);
+//delete board
+router.delete("/delete/:_id", deleteBoard);
  //add column
 router.post("/add/column", addColumn);
 //add column

@@ -1,5 +1,6 @@
 const User = require("../models/user.model");
 const Board = require("../models/board.model");
+const mongoose = require("mongoose");
 
 const createBoard = (req, res) => {
     const {title, owner} = req.body;
@@ -47,6 +48,41 @@ const createBoard = (req, res) => {
                 console.log("err", err);
             });
     }
+};
+
+const deleteBoard = (req, res) => {
+    console.log("req.body, req.headers, req.params, req.data");
+    const {token} = req.headers;
+    const {_id} = req.params;
+    console.log(typeof _id, mongoose.Types.ObjectId(_id));
+    User.findOneAndUpdate(
+        {token},
+        {$pull: {boards: {_id: mongoose.Types.ObjectId(_id)}}}
+    )
+        .select("-password")
+        .select("-token")
+        .then(user => {
+            console.log("user", user);
+            if (!!user) {
+                console.log(user);
+                Board.findOneAndDelete({_id, owner: user.email})
+                    .then(doc => {
+                        res.status(200).json({message: "success"});
+                    })
+                    .catch(err => {
+                        console.log("err", err);
+                        res.status(400).json(err);
+                    });
+            } else {
+                res.status(400).json({
+                    Error: "Something went wrong",
+                });
+            }
+        })
+        .catch(err => {
+            console.log("err", err);
+            res.status(400).json(err);
+        });
 };
 const publicBoard = (req, res) => {
     const {_id} = req.params;
@@ -111,12 +147,12 @@ const addTask = (req, res) => {
                 doc &&
                 doc.columns.find(element => {
                     return element.columnName === columnName;
-                }); 
-                // console.log("present",present);
-                const presentTask = present.tasks.find(element => {
-                    return element.title === title;
                 });
-                
+            // console.log("present",present);
+            const presentTask = present.tasks.find(element => {
+                return element.title === title;
+            });
+
             if (!!doc && present && !presentTask) {
                 Board.update(
                     {_id, "columns.columnName": columnName},
@@ -131,7 +167,7 @@ const addTask = (req, res) => {
                             },
                         },
                     }
-                ) 
+                )
                     .then(doc => {
                         res.status(200).json(doc);
                     })
@@ -149,4 +185,4 @@ const addTask = (req, res) => {
             console.log("err", err);
         });
 };
-module.exports = {createBoard, publicBoard, addColumn, addTask};
+module.exports = {createBoard, deleteBoard, publicBoard, addColumn, addTask};
