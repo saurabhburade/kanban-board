@@ -15,24 +15,11 @@ const boardSchema = new Schema(
             type: Array,
             default: [],
         },
-        columns: [
-            {
-                columnName: {
-                    type: String,
-                    unique: true,
-                    required: true,
-                },
-                tasks: [
-                    {
-                        title: String,
-                        label: String,
-                        description: String,
-                        created: Date,
-                        modified: Date,
-                    },
-                ],
-            },
-        ],
+        
+        columns: {
+            type:Array,
+            default:[]
+        }
     },
     {
         timestamps: true,
