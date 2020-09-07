@@ -2,7 +2,7 @@ import Axios from "axios";
 
 export const login = data => {
     console.log(data);
-    Axios.post("/api/user/login", data, {
+    Axios.post("http://localhost:8000/api/user/login", data, {
         headers: {
             "Content-type": "application/json",
         },
@@ -20,13 +20,13 @@ export const login = data => {
 };
 
 export const signup = data => {
-    Axios.post("/api/user/register", data, {
+    Axios.post("http://localhost:8000/api/user/register", data, {
         headers: {
             "Content-type": "application/json",
         },
     })
         .then(res => {
-            console.log(res)
+            console.log(res);
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("_id", res.data._id);
             window.location.href = "/dashboard";
