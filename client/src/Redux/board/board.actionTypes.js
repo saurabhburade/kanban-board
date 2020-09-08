@@ -1,0 +1,2 @@
+export const FETCH_BOARD_SUCCESS = "FETCH_BOARD_SUCCESS"; //payload
+export const FETCH_BOARD_FAIL = "FETCH_BOARD_FAIL";
