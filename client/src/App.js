@@ -10,6 +10,7 @@ import Profile from "./Components/Profile/Profile";
 import {fetchUser} from "./Redux/user/user.actionCreators";
 import {connect} from "react-redux";
 import {isAuth} from "./Utils/auth";
+import Board from './Components/Board/Board';
 const ENDPOINT = "http://127.0.0.1:8000";
 
 function App(props) {
@@ -40,6 +41,7 @@ function App(props) {
                     <Route path="/" exact component={Home} />
                     <Route path="/register" exact component={SignUp} />
                     <Route path="/dashboard" exact component={Profile} />
+                    <Route path="/boards/:id" exact component={Board} />
                 </Switch>
             </div>
         </Router>
