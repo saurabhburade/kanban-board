@@ -11,13 +11,11 @@ import {fetchUser} from "./Redux/user/user.actionCreators";
 import {connect} from "react-redux";
 import {isAuth} from "./Utils/auth";
 import Board from './Components/Board/Board';
-const ENDPOINT = "http://127.0.0.1:8000";
-
+import { socket } from './Utils/socket';
 function App(props) {
     const [response, setResponse] = useState("");
 
     useEffect(() => {
-        const socket = socketIOClient(ENDPOINT);
         if (isAuth()) {
             socket.emit("connected", {key: localStorage.getItem("_id")});
             socket.on("changeData", data => {
