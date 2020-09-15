@@ -11,6 +11,7 @@ const User = require("./models/user.model");
 const userRoutes = require("./routes/user.routes");
 const boardRoutes = require("./routes/board.routes");
 const {uri, dbName} = require("./configs/db.config");
+const Board = require("./models/board.model");
 console.log(uri, dbName);
 
 mongoose.connect(
@@ -40,8 +41,8 @@ io.on("connection", function (socket) {
     socket.on("connected", user => {
         console.log(user);
         socket.join(user.key, () => {
-            const changeStream = User.watch();
-            changeStream.on("change", change => {
+            const changeUserStream = User.watch();
+            changeUserStream.on("change", change => {
                 console.log(
                     change.documentKey._id,
                     user.key,
@@ -64,6 +65,28 @@ io.on("connection", function (socket) {
                 }
                 // console.log("change", change);
             });
+             const changeBoardStream = Board.watch();
+             changeBoardStream.on("change", change => {
+                 console.log(
+                     change.documentKey._id,
+                     user.key,
+                     socket.rooms[user.key],
+                     change.documentKey._id == user.key
+                 );
+                 if (change.documentKey._id == user.key) {
+                     Board.findOne({_id: change.documentKey._id})
+                         .then(doc => {
+                             io.to(socket.rooms[user.key]).emit(
+                                 "changeBoardData",
+                                 doc
+                             );
+                         })
+                         .catch(err => {
+                             console.log("err", err);
+                         });
+                 }
+                 // console.log("change", change);
+             });
         });
     });
 
