@@ -1,0 +1,9 @@
+.column-card {
+    width: 20em;
+    background: rgb(255, 255, 255);
+    margin: 5% 0%;
+    padding: 5%;
+    /* border: 1px solid rgb(252, 252, 252); */
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgb(245, 245, 245);
+}

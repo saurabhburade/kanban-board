@@ -1,0 +1,18 @@
+.column-main{
+    margin: 1%;
+    width: 22em;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+.colmn-cont-secondary{
+      /* overflow-x: hidden;
+    overflow-y: scroll; */
+    width: 100%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
