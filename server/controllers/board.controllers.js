@@ -117,6 +117,7 @@ const addColumn = (req, res) => {
                         $push: {
                             columns: {
                                 columnName,
+                                tasks:[]
                             },
                         },
                     }
@@ -149,9 +150,12 @@ const addTask = (req, res) => {
                     return element.columnName === columnName;
                 });
             // console.log("present",present);
-            const presentTask = present.tasks.find(element => {
-                return element.title === title;
-            });
+            const presentTask =
+                present &&
+                present.tasks &&
+                present.tasks.find(element => {
+                    return element.title === title;
+                });
 
             if (!!doc && present && !presentTask) {
                 Board.update(
@@ -185,4 +189,7 @@ const addTask = (req, res) => {
             console.log("err", err);
         });
 };
-module.exports = {createBoard, deleteBoard, publicBoard, addColumn, addTask};
+const updateTaskMove=(req,res)=>{
+    console.log(req.body);
+}
+module.exports = {createBoard, deleteBoard, publicBoard, addColumn, addTask,updateTaskMove};
