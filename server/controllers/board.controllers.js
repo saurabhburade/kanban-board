@@ -117,7 +117,7 @@ const addColumn = (req, res) => {
                         $push: {
                             columns: {
                                 columnName,
-                                tasks:[]
+                                tasks: [],
                             },
                         },
                     }
@@ -189,7 +189,33 @@ const addTask = (req, res) => {
             console.log("err", err);
         });
 };
-const updateTaskMove=(req,res)=>{
+const updateTaskMove = (req, res) => {
     console.log(req.body);
-}
-module.exports = {createBoard, deleteBoard, publicBoard, addColumn, addTask,updateTaskMove};
+    const {_id,columns} = req.body;
+    
+    Board.update(
+        {_id},
+        {
+            $set: {
+                columns,
+            },
+        }
+    )
+        .then(doc => {
+            res.status(200).json(doc);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json({
+                Error: "Something went wrong",
+            });
+        });
+};
+module.exports = {
+    createBoard,
+    deleteBoard,
+    publicBoard,
+    addColumn,
+    addTask,
+    updateTaskMove,
+};
