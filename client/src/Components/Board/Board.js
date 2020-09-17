@@ -30,7 +30,7 @@ function Board(props) {
                 <h4>Board Title Here</h4>
             </div>
             <div className="columns-cont-main d-flex">
-                <Column />
+                <Column _id={props?.match?.params?.id} />
             </div>
         </div>
     );
