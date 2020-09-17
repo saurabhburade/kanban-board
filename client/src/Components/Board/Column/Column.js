@@ -4,8 +4,9 @@ import TaskCard from "./../TaskCard/TaskCard";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {Tag} from "antd";
 import {connect} from "react-redux";
+import {updateOnTaskMove} from "./../../../Utils/boardHelpers";
 
-function Column({board}) {
+function Column({board, _id}) {
     const [columns, setColumns] = useState(board?.columns);
     useEffect(() => {
         setColumns(board?.columns);
@@ -18,25 +19,70 @@ function Column({board}) {
         const {source, destination} = result;
         if (source.droppableId === destination.droppableId) {
             console.log("columns", columns);
-            let tasks = columns?.find((element, index) => {
-                return element.columnName == source.droppableId;
-            })?.tasks;
+            let updatedColumns = columns;
 
+            let commonColumn = columns?.find((element, index) => {
+                return element.columnName == source.droppableId;
+            });
+            let tasks = commonColumn?.tasks;
             const [removed] = tasks?.splice(source.index, 1); //delete
             tasks.splice(destination.index, 0, removed); //insert
+            commonColumn.tasks = tasks;
+            updatedColumns.splice(
+                columns.indexOf(commonColumn),
+                1,
+                commonColumn
+            );
+            const data = {
+                _id,
+                columns: updatedColumns,
+            };
+            updateOnTaskMove(data, res => {
+                console.log(res);
+                setColumns(updatedColumns);
+            });
             console.log(taskCol, tasks);
         } else {
             console.log("columns", columns);
-            let sourceTasks = columns?.find((element, index) => {
+            let updatedColumns = columns;
+            let sourceColumn = columns?.find((element, index) => {
                 return element.columnName == source.droppableId;
-            })?.tasks;
-            let destinationTasks = columns?.find((element, index) => {
+            });
+            let sourceTasks = sourceColumn?.tasks;
+            let destinationColumn = columns?.find((element, index) => {
                 return element.columnName == destination.droppableId;
-            })?.tasks;
-
+            });
+            let destinationTasks = destinationColumn?.tasks;
             const [removed] = sourceTasks?.splice(source.index, 1);
             destinationTasks.splice(destination.index, 0, removed);
-            console.log(taskCol, destinationTasks, sourceTasks);
+
+            sourceColumn.tasks = sourceTasks;
+            destinationColumn.tasks = destinationTasks;
+            updatedColumns.splice(
+                columns.indexOf(sourceColumn),
+                1,
+                sourceColumn
+            );
+            updatedColumns.splice(
+                columns.indexOf(destinationColumn),
+                1,
+                destinationColumn
+            );
+            setColumns(updatedColumns);
+            const data = {
+                _id,
+                columns: updatedColumns,
+            };
+            updateOnTaskMove(data, res => {
+                console.log(res);
+            });
+            console.log(
+                taskCol,
+                destinationTasks,
+                sourceTasks,
+                columns.indexOf(sourceColumn),
+                columns
+            );
         }
     };
     return (
