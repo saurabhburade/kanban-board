@@ -11,12 +11,12 @@ export const addBoard = (data, cb) => {
         .then(res => {
             console.log(res);
             cb("success");
-            message.info("Success");
+            message.success("Success");
         })
         .catch(err => {
             console.log(err);
             cb("error");
-            message.info("Failed to add board");
+            message.error("Failed to add board");
         });
 };
 
@@ -30,12 +30,12 @@ export const deleteBoard = (data, cb) => {
         .then(res => {
             console.log(res);
             cb("success");
-            message.info("Success");
+            message.success("Success");
         })
         .catch(err => {
             console.log(err);
             cb("error");
-            message.info("Failed to add board");
+            message.error("Failed to add board");
         });
 };
 export const updateOnTaskMove = (data, cb) => {
@@ -49,11 +49,11 @@ export const updateOnTaskMove = (data, cb) => {
         .then(res => {
             console.log(res);
             cb("success");
-            message.info("Success");
+            message.success("Success");
         })
         .catch(err => {
             console.log(err);
             cb("error");
-            message.info("Failed");
+            message.error("Failed");
         });
 };
