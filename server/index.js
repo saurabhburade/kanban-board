@@ -73,10 +73,10 @@ io.on("connection", function (socket) {
                      socket.rooms[user.key],
                      change.documentKey._id == user.key
                  );
-                 if (change.documentKey._id == user.key) {
+                 
                      Board.findOne({_id: change.documentKey._id})
                          .then(doc => {
-                             io.to(socket.rooms[user.key]).emit(
+                             io.to(socket.rooms[change.documentKey._id]).emit(
                                  "changeBoardData",
                                  doc
                              );
@@ -84,7 +84,7 @@ io.on("connection", function (socket) {
                          .catch(err => {
                              console.log("err", err);
                          });
-                 }
+                 
                  // console.log("change", change);
              });
         });
