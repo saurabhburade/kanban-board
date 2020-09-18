@@ -49,12 +49,12 @@ io.on("connection", function (socket) {
                     socket.rooms[user.key],
                     change.documentKey._id == user.key
                 );
-                if (change.documentKey._id == user.key) {
+                if (!!change.documentKey._id) {
                     User.findOne({_id: change.documentKey._id})
                         .select("-password")
                         .select("-token")
                         .then(doc => {
-                            io.to(socket.rooms[user.key]).emit(
+                            io.to(socket.rooms[change.documentKey._id]).emit(
                                 "changeData",
                                 doc
                             );
