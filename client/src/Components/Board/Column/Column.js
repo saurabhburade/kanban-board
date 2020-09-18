@@ -2,7 +2,9 @@ import React, {useState, useEffect} from "react";
 import "./column.css";
 import TaskCard from "./../TaskCard/TaskCard";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
-import {Tag} from "antd";
+import {Tag, Button, Tooltip} from "antd";
+import {FileAddOutlined} from "@ant-design/icons";
+
 import {connect} from "react-redux";
 import {updateOnTaskMove} from "./../../../Utils/boardHelpers";
 
@@ -90,7 +92,15 @@ function Column({board, _id}) {
             {columns?.map((columnItem, i) => {
                 return (
                     <div className="column-main">
-                        <h5>{columnItem.columnName}</h5>
+                        <div className="col-head w-100 d-flex justify-content-between pl-3 pr-3   ">
+                            <h5>{columnItem.columnName}</h5>
+                            <Tooltip title="Add task">
+                                <Button
+                                    icon={<FileAddOutlined />}
+                                    shape="circle"
+                                />
+                            </Tooltip>
+                        </div>
                         <Droppable droppableId={columnItem.columnName} key={i}>
                             {(provided, snapshot) => {
                                 return (
