@@ -1,10 +1,11 @@
 .column-main{
     margin: 1%;
     width: 22em;
-    
+    padding:1% 0%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: rgba(240, 240, 240, 0.219);
     
 }
 .colmn-cont-secondary{

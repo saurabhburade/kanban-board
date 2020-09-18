@@ -3,7 +3,7 @@ body {
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-     background: rgba(248, 246, 246, 0.384) !important;
+    background: rgba(248, 246, 246, 0.384) !important;
 }
 
 code {
@@ -11,10 +11,18 @@ code {
         monospace;
 }
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
-* {
+*,
+span {
     font-family: "Poppins", sans-serif;
     margin: 0em;
     padding: 0em;
+}
+.ant-btn{
+    margin: 0em;
+    padding: 0em;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 *::-webkit-scrollbar {
     -webkit-appearance: none;
