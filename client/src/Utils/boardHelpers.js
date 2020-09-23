@@ -76,3 +76,22 @@ export const addTask = (data, cb) => {
             message.error("Failed");
         });
 };
+export const addColumn = (data, cb) => {
+    console.log(data);
+    Axios.post("http://localhost:8000/api/board/add/column", data, {
+        headers: {
+            "Content-type": "application/json",
+            token: localStorage.getItem("token"),
+        },
+    })
+        .then(res => {
+            console.log(res);
+            cb("success");
+            message.success("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            cb("error");
+            message.error("Failed");
+        });
+};
