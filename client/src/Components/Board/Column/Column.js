@@ -3,17 +3,22 @@ import "./column.css";
 import TaskCard from "./../TaskCard/TaskCard";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {Tag, Button, Tooltip} from "antd";
-import {FileAddOutlined} from "@ant-design/icons";
+import {FileAddOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
 
 import {connect} from "react-redux";
 import {updateOnTaskMove} from "./../../../Utils/boardHelpers";
 import AddBoardModal from "./../../AddBoard/AddBoardModal";
 import AddTaskModal from './../TaskCard/AddTaskModal';
+import confirm from "antd/lib/modal/confirm";
+import AddColumnModal from './../AddColumnModal/AddColumnModal';
 
 function Column({board, _id}) {
     const [columns, setColumns] = useState(board?.columns);
     const [modalVisible, setModalVisible] = useState(false);
     const [activeColumnName, setactiveColumnName] = useState("")
+        const [addColumnVisible, setaddColumnVisible] = useState(false);
+
+
     const handleModalCancel = () => {
         setModalVisible(false);
     };
@@ -94,9 +99,16 @@ function Column({board, _id}) {
             );
         }
     };
+        const handleAddColumnModalCancel = () => {
+            setaddColumnVisible(false);
+        };
     return (
         <>
-          
+            <AddColumnModal
+                modalVisible={addColumnVisible}
+                onCancel={handleAddColumnModalCancel}
+                _id={_id}
+            />
             <DragDropContext onDragEnd={dragEnd}>
                 {columns?.map((columnItem, i) => {
                     return (
@@ -199,6 +211,16 @@ function Column({board, _id}) {
                     );
                 })}
             </DragDropContext>
+            <div className="column-main pl-5 pr-5" style={{width:"400px",height: "fit-content"}}>
+                <Button
+                    icon={<FileAddOutlined />}
+                    onClick={() => {
+                        setaddColumnVisible(true);
+                    }}
+                >
+                    Add New Column
+                </Button>
+            </div>
         </>
     );
 }
