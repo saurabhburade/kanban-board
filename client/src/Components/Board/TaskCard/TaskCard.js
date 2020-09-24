@@ -1,14 +1,29 @@
-import React from 'react'
-import "./TaskCard.css"
+import React, { useState } from "react";
+import "./TaskCard.css";
 import {Tag} from "antd";
+import ViewTaskModal from "../ViewTaskModal/ViewTaskModal";
 
-function TaskCard({title,label}) {
+function TaskCard(props) {
+    const [viewColumnVisible, setviewColumnVisible] = useState(false);
+    const handleViewColumnModalCancel = () => {
+        setviewColumnVisible(false);
+    };
     return (
-        <div className="column-card">
-            <p>{title}</p>
-            <Tag color="default">{label}</Tag>
-        </div>
+        <>
+            <ViewTaskModal
+            {...props}
+                modalVisible={viewColumnVisible}
+                onCancel={handleViewColumnModalCancel}
+            />
+            <div
+                className="column-card"
+                onClick={() => setviewColumnVisible(true)}
+            >
+                <p>{props.title}</p>
+                <Tag color="default">{props.label}</Tag>
+            </div>
+        </>
     );
 }
 
-export default TaskCard
+export default TaskCard;
