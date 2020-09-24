@@ -10,8 +10,9 @@ import Profile from "./Components/Profile/Profile";
 import {fetchUser} from "./Redux/user/user.actionCreators";
 import {connect} from "react-redux";
 import {isAuth} from "./Utils/auth";
-import Board from './Components/Board/Board';
+// import Board from './Components/Board/Board';
 import { socket } from './Utils/socket';
+import { Board } from './Components/LoadableComponents/index';
 function App(props) {
     const [response, setResponse] = useState("");
 
