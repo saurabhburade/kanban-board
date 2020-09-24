@@ -35,13 +35,14 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan());
 //socket
+const changeUserStream = User.watch();
+const changeBoardStream = Board.watch();
 
 io.on("connection", function (socket) {
     // console.log(changeStream);
     socket.on("connected", user => {
         console.log(user);
         socket.join(user.key, () => {
-            const changeUserStream = User.watch();
             changeUserStream.on("change", change => {
                 console.log(
                     change.documentKey._id,
@@ -50,43 +51,28 @@ io.on("connection", function (socket) {
                     change.documentKey._id == user.key
                 );
                 if (!!change.documentKey._id) {
-                    User.findOne({_id: change.documentKey._id})
-                        .select("-password")
-                        .select("-token")
-                        .then(doc => {
-                            io.to(socket.rooms[change.documentKey._id]).emit(
-                                "changeData",
-                                doc
-                            );
-                        })
-                        .catch(err => {
-                            console.log("err", err);
-                        });
+                    io.to(
+                        socket.rooms[change.documentKey._id]
+                    ).emit("changeData", {message: "modified"});
                 }
                 // console.log("change", change);
             });
-             const changeBoardStream = Board.watch();
-             changeBoardStream.on("change", change => {
-                 console.log(
-                     change.documentKey._id,
-                     user.key,
-                     socket.rooms[user.key],
-                     change.documentKey._id == user.key
-                 );
-                 
-                     Board.findOne({_id: change.documentKey._id})
-                         .then(doc => {
-                             io.to(socket.rooms[change.documentKey._id]).emit(
-                                 "changeBoardData",
-                                 doc
-                             );
-                         })
-                         .catch(err => {
-                             console.log("err", err);
-                         });
-                 
-                 // console.log("change", change);
-             });
+
+            changeBoardStream.on("change", change => {
+                console.log(
+                    change.documentKey._id,
+                    user.key,
+                    socket.rooms[user.key],
+                    change.documentKey._id == user.key
+                );
+                if (!!change.documentKey._id) {
+                    io.to(
+                        socket.rooms[change.documentKey._id]
+                    ).emit("changeBoardData", {message: "modified"});
+                }
+
+                // console.log("change", change);
+            });
         });
     });
 
