@@ -188,12 +188,7 @@ function Column({board, _id}) {
                                                                         }}
                                                                     >
                                                                         <TaskCard
-                                                                            title={
-                                                                                task.title
-                                                                            }
-                                                                            label={
-                                                                                task.label
-                                                                            }
+                                                                        {...task}
                                                                         />
                                                                     </div>
                                                                 );
