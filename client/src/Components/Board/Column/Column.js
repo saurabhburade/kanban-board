@@ -195,7 +195,9 @@ function Column({board, _id}) {
                                                                                 columnItem?.tasks
                                                                             }
                                                                             {...task}
-                                                                            
+                                                                            taskIndex={
+                                                                                index
+                                                                            }
                                                                             columnName={
                                                                                 columnItem?.columnName
                                                                             }

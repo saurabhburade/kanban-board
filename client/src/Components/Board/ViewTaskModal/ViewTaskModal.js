@@ -19,11 +19,11 @@ function ViewTaskModal({
     description,
     created,
     columnName,
+    taskIndex,
     _id,
     tasks,
 }) {
     const showConfirm = _ => {
-        console.log("index", taskIndex, columnName, columnIndex);
         confirm({
             title: `Do you Want to delete this Task ?`,
             icon: <ExclamationCircleOutlined style={{color: "red"}} />,
