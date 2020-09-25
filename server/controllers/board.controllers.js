@@ -191,8 +191,8 @@ const addTask = (req, res) => {
 };
 const updateTaskMove = (req, res) => {
     console.log(req.body);
-    const {_id,columns} = req.body;
-    
+    const {_id, columns} = req.body;
+
     Board.update(
         {_id},
         {
@@ -211,6 +211,22 @@ const updateTaskMove = (req, res) => {
             });
         });
 };
+const deleteTask = (req, res) => {
+    console.log(req.body);
+    const {_id, columnName, tasks} = req.body;
+    Board.updateOne(
+        {_id, "columns.columnName": columnName},
+        {$set: {"columns.$.tasks": tasks}}
+    )
+        .then(doc => {
+            console.log("docxx", doc);
+            res.status(200).json({message: "success"});
+        })
+        .catch(err => {
+            console.log("errxx", err);
+            res.status(400).json({message: "failed"});
+        });
+};
 module.exports = {
     createBoard,
     deleteBoard,
@@ -218,4 +234,5 @@ module.exports = {
     addColumn,
     addTask,
     updateTaskMove,
+    deleteTask,
 };

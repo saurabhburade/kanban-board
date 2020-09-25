@@ -8,6 +8,7 @@ const {
     addTask,
     deleteBoard,
     updateTaskMove,
+    deleteTask,
 } = require("../controllers/board.controllers");
 
 //get public board
@@ -23,4 +24,6 @@ router.post("/update/task/move", updateTaskMove);
 router.post("/add/column", addColumn);
 //add column
 router.post("/add/column/task", addTask);
+//delete task
+router.post("/delete/column/task", deleteTask);
 module.exports = router;
