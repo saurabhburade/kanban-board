@@ -188,7 +188,17 @@ function Column({board, _id}) {
                                                                         }}
                                                                     >
                                                                         <TaskCard
-                                                                        {...task}
+                                                                            _id={
+                                                                                _id
+                                                                            }
+                                                                            tasks={
+                                                                                columnItem?.tasks
+                                                                            }
+                                                                            {...task}
+                                                                            
+                                                                            columnName={
+                                                                                columnItem?.columnName
+                                                                            }
                                                                         />
                                                                     </div>
                                                                 );
