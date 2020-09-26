@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import image from "../../assets/chat1.svg";
+import image from "../../assets/hero.svg";
 import chatimage from "../../assets/chat1.JPG";
 import "./home.css";
 import {Steps, Tooltip, Button as AntButton} from "antd";
@@ -23,11 +23,10 @@ function Home() {
         <div className="home-container">
             <div className="hero-container ">
                 <div className="hero-text wow animate__animated animate__fadeInUp   ">
-                    <p> Welcome to Chat-App</p>
                     <p>
-                        Lets get started with chatapp and connect with your
-                        friends through email. <br />
-                        This project is developed by Saurabh Burade.
+                        Kanban Board</p>
+                    <p>
+                        Control, Collaborate & Structure your project through Kanban Boards. 
                     </p>
                     <div className="action-btns d-flex mt-3">
                         {isAuth() ? null : (
@@ -49,7 +48,7 @@ function Home() {
                 </div>
                 <div className="hero-image-cont wow animate__animated animate__fadeInUp">
                     <img className="hero-image" src={image} alt="" />
-                </div>
+                </div>      
             </div>
             <div className="steps">
                 <h3>Steps</h3>
