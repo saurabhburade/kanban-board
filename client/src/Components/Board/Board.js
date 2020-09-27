@@ -27,7 +27,7 @@ function Board(props) {
     return (
         <div className="board-cont-main">
             <div className="board-head">
-                <h4>Board Title Here</h4>
+    <h4>{props?.board?.title}</h4>
             </div>
             <div className="columns-cont-main d-flex">
                 <Column _id={props?.match?.params?.id} />
@@ -35,7 +35,9 @@ function Board(props) {
         </div>
     );
 }
-const mapStateToProps = state => ({});
+const mapStateToProps = ({board} )=> ({
+    board:board.board
+});
 
 const mapDispatchToProps = dispatch => {
     return {fetchBoard: data => dispatch(fetchBoard(data))};
