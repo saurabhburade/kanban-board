@@ -213,14 +213,14 @@ function Home() {
             >
                 <h3
                     className="pb-0 wow  animate__animated animate__fadeInUp"
-                    style={{ color: "white"}}
+                    style={{color: "white"}}
                 >
                     About Project
                 </h3>
                 <p>This Project is developed by Saurabh Burade</p>
                 <div className="d-flex align-items-center justify-content-center">
                     <a
-                        href="https://github.com/saurabhburade/Chat-App"
+                        href="https://github.com/saurabhburade/kanban-board"
                         target="_blank"
                     >
                         <AntButton
