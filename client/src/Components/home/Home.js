@@ -194,11 +194,6 @@ function Home() {
                             <img src={mongoIcon} alt="mongoIcon" />
                         </div>
                     </Tooltip>
-                    <Tooltip placement="bottom" title="Firebase">
-                        <div className="tech-icons-cont wow  animate__animated animate__fadeInUp">
-                            <img src={firebaseIcon} alt="antIcon" />
-                        </div>
-                    </Tooltip>
                     <Tooltip placement="bottom" title="Bootstrap">
                         <div className="tech-icons-cont wow  animate__animated animate__fadeInUp">
                             <img src={bootstrapIcon} alt="bootstrapIcon" />
@@ -212,8 +207,14 @@ function Home() {
                 </div>
             </div>
 
-            <div className="steps tech-cont ">
-                <h3 className="pb-0 wow  animate__animated animate__fadeInUp">
+            <div
+                className="steps tech-cont"
+                style={{background: "black", color: "white"}}
+            >
+                <h3
+                    className="pb-0 wow  animate__animated animate__fadeInUp"
+                    style={{ color: "white"}}
+                >
                     About Project
                 </h3>
                 <p>This Project is developed by Saurabh Burade</p>
