@@ -14,7 +14,8 @@ import AddColumnModal from "./../AddColumnModal/AddColumnModal";
 import {isAuth} from "./../../../Utils/auth";
 
 function Column({board, _id, user}) {
-    const [columns, setColumns] = useState(board?.columns);
+    // const [columns, setColumns] = useState(board?.columns);
+    let columns=board?.columns
     const [modalVisible, setModalVisible] = useState(false);
     const [activeColumnName, setactiveColumnName] = useState("");
     const [addColumnVisible, setaddColumnVisible] = useState(false);
@@ -22,13 +23,10 @@ function Column({board, _id, user}) {
     const handleModalCancel = () => {
         setModalVisible(false);
     };
-    useEffect(() => {
-        setColumns(board?.columns);
-    }, [board]);
     console.log("board", board);
     const [taskCol, settaskCol] = useState([]);
     const dragEnd = result => {
-        console.log(result, columns, setColumns);
+        // console.log(result, columns, setColumns);
         if (!result.destination) return;
         const {source, destination} = result;
         if (source.droppableId === destination.droppableId) {
@@ -53,7 +51,7 @@ function Column({board, _id, user}) {
             };
             updateOnTaskMove(data, res => {
                 console.log(res);
-                setColumns(updatedColumns);
+                // setColumns(updatedColumns);
             });
             console.log(taskCol, tasks);
         } else {
@@ -82,7 +80,7 @@ function Column({board, _id, user}) {
                 1,
                 destinationColumn
             );
-            setColumns(updatedColumns);
+            // setColumns(updatedColumns);
             const data = {
                 _id,
                 columns: updatedColumns,
@@ -217,7 +215,7 @@ function Column({board, _id, user}) {
                                                                             columnName={
                                                                                 columnItem?.columnName
                                                                             }
-                                                                            deleteTask={
+                                                                            deleteTaskBtn={
                                                                                 !(
                                                                                     isAuth() &&
                                                                                     (user?.email ==

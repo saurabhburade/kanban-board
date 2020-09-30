@@ -22,7 +22,7 @@ function ViewTaskModal({
     taskIndex,
     _id,
     tasks,
-    deleteTask,
+    deleteTaskBtn,
 }) {
     const showConfirm = _ => {
         confirm({
@@ -69,15 +69,16 @@ function ViewTaskModal({
                 </div>
                 <div>
                     <p>Created At : {new Date(created).toDateString()}</p>
-                    {!deleteTask && <Button
-                       
-                        type="danger"
-                        icon={<DeleteOutlined />}
-                        size={"middle"}
-                        onClick={showConfirm}
-                    >
-                        Delete Task
-                    </Button>}
+                    {!deleteTaskBtn && (
+                        <Button
+                            type="danger"
+                            icon={<DeleteOutlined />}
+                            size={"middle"}
+                            onClick={showConfirm}
+                        >
+                            Delete Task
+                        </Button>
+                    )}
                 </div>
             </div>
         </Modal>
