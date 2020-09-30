@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useState} from "react";
 import image from "../../assets/hero.svg";
 import chatimage from "../../assets/chat1.JPG";
 import "./home.css";
@@ -15,12 +15,18 @@ import antIcon from "../../assets/ant.svg";
 import firebaseIcon from "../../assets/firebase.svg";
 import scrumBoard from "../../assets/undraw_Scrum_board_re_wk7v.svg";
 import check from "../../assets/undraw_Booked_re_vtod.svg";
+import signupImg from "../../assets/signup.png";
+import loginImg from "../../assets/login.png";
+import dashImg from "../../assets/dashboard.png";
+import boardImg from "../../assets/board.png";
 import {GithubOutlined} from "@ant-design/icons";
 import "animate.css";
 import WOW from "wowjs";
 new WOW.WOW().init();
 const {Step} = Steps;
+const imgArr=[signupImg,loginImg,dashImg,boardImg]
 function Home() {
+    const [current, setCurrent] = useState(0)
     return (
         <div className="home-container">
             <div className="hero-container ">
@@ -92,9 +98,16 @@ function Home() {
             <div className="steps mt-5">
                 <h3>Steps</h3>
                 <div className="d-flex align-items-center wow animate__animated animate__fadeInUp">
-                    <Steps progressDot direction="vertical">
+                    <Steps
+                        progressDot
+                        current={current}
+                        onChange={c => {
+                            setCurrent(c);
+                            console.log(c);
+                        }}
+                        direction="vertical"
+                    >
                         <Step
-                            status="finish"
                             title="Sign Up"
                             description={
                                 <p className="desc">
@@ -104,31 +117,27 @@ function Home() {
                             }
                         />
                         <Step
-                            status="finish"
                             title="Login"
                             description={
                                 <p className="desc">
                                     Login through your email and password and
-                                    get introduced to chat screen
+                                    get introduced your profile dashboard
                                 </p>
                             }
                         />
                         <Step
-                            status="finish"
-                            title="Add friend"
+                            title="Dashboard"
                             description={
                                 <p className="desc">
-                                    Go to search bar at chat screen and enter
-                                    email of your friend.
+                                   Get your all Kanban Boards on dashboard
                                 </p>
                             }
                         />
                         <Step
-                            status="finish"
                             title="Good to go"
                             description={
                                 <p className="desc">
-                                    Boom you can chat with your friend 🍻
+                                    Boom you can now use this application to manage the workflows 🍻
                                 </p>
                             }
                         />
@@ -136,7 +145,7 @@ function Home() {
                     <div>
                         <img
                             className="chat-screen wow  animate__animated animate__fadeInUp"
-                            src={chatimage}
+                            src={imgArr[current]}
                             alt=""
                         />
                     </div>
