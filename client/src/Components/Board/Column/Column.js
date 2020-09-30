@@ -8,16 +8,16 @@ import {FileAddOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
 import {connect} from "react-redux";
 import {updateOnTaskMove} from "./../../../Utils/boardHelpers";
 import AddBoardModal from "./../../AddBoard/AddBoardModal";
-import AddTaskModal from './../TaskCard/AddTaskModal';
+import AddTaskModal from "./../TaskCard/AddTaskModal";
 import confirm from "antd/lib/modal/confirm";
-import AddColumnModal from './../AddColumnModal/AddColumnModal';
+import AddColumnModal from "./../AddColumnModal/AddColumnModal";
+import {isAuth} from "./../../../Utils/auth";
 
-function Column({board, _id}) {
+function Column({board, _id, user}) {
     const [columns, setColumns] = useState(board?.columns);
     const [modalVisible, setModalVisible] = useState(false);
-    const [activeColumnName, setactiveColumnName] = useState("")
-        const [addColumnVisible, setaddColumnVisible] = useState(false);
-
+    const [activeColumnName, setactiveColumnName] = useState("");
+    const [addColumnVisible, setaddColumnVisible] = useState(false);
 
     const handleModalCancel = () => {
         setModalVisible(false);
@@ -99,9 +99,9 @@ function Column({board, _id}) {
             );
         }
     };
-        const handleAddColumnModalCancel = () => {
-            setaddColumnVisible(false);
-        };
+    const handleAddColumnModalCancel = () => {
+        setaddColumnVisible(false);
+    };
     return (
         <>
             <AddColumnModal
@@ -124,6 +124,15 @@ function Column({board, _id}) {
                                 <h5>{columnItem.columnName}</h5>
                                 <Tooltip title="Add task">
                                     <Button
+                                        disabled={
+                                            !(
+                                                isAuth() &&
+                                                (user?.email == board?.owner ||
+                                                    board?.team?.includes(
+                                                        user?.email
+                                                    ))
+                                            )
+                                        }
                                         icon={<FileAddOutlined />}
                                         shape="circle"
                                         onClick={() => {
@@ -157,9 +166,16 @@ function Column({board, _id}) {
                                                 (task, index) => {
                                                     return (
                                                         <Draggable
-                                                            // isDragDisabled={
-                                                            //     true
-                                                            // }
+                                                            isDragDisabled={
+                                                                !(
+                                                                    isAuth() &&
+                                                                    (user?.email ==
+                                                                        board?.owner ||
+                                                                        board?.team?.includes(
+                                                                            user?.email
+                                                                        ))
+                                                                )
+                                                            }
                                                             draggableId={
                                                                 "draggable" +
                                                                 columnItem.columnName +
@@ -201,6 +217,16 @@ function Column({board, _id}) {
                                                                             columnName={
                                                                                 columnItem?.columnName
                                                                             }
+                                                                            deleteTask={
+                                                                                !(
+                                                                                    isAuth() &&
+                                                                                    (user?.email ==
+                                                                                        board?.owner ||
+                                                                                        board?.team?.includes(
+                                                                                            user?.email
+                                                                                        ))
+                                                                                )
+                                                                            }
                                                                         />
                                                                     </div>
                                                                 );
@@ -218,21 +244,28 @@ function Column({board, _id}) {
                     );
                 })}
             </DragDropContext>
-            <div className="column-main pl-5 pr-5" style={{width:"400px",height: "fit-content"}}>
-                <Button
-                    icon={<FileAddOutlined />}
-                    onClick={() => {
-                        setaddColumnVisible(true);
-                    }}
-                >
-                    Add New Column
-                </Button>
-            </div>
+            {(!isAuth() && !(user?.email == board?.owner)) ||
+                (!board?.team?.includes(user?.email) && (
+                    <div
+                        className="column-main pl-5 pr-5"
+                        style={{width: "400px", height: "fit-content"}}
+                    >
+                        <Button
+                            icon={<FileAddOutlined />}
+                            onClick={() => {
+                                setaddColumnVisible(true);
+                            }}
+                        >
+                            Add New Column
+                        </Button>
+                    </div>
+                ))}
         </>
     );
 }
-const mapStateToProps = ({board}) => ({
+const mapStateToProps = ({board, user}) => ({
     board: board?.board,
+    user: user?.user,
 });
 
 const mapDispatchToProps = {};
