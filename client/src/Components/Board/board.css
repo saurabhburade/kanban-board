@@ -11,3 +11,7 @@
     height:100%;
     overflow: scroll;
 }
+.board-head > h4{
+    font-size: 1.5em;
+    font-weight: 600;
+}

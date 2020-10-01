@@ -4,10 +4,9 @@ import {useEffect} from "react";
 import {connect} from "react-redux";
 import {fetchBoard} from "./../../Redux/board/board.actionCreators";
 import Column from "./Column/Column";
-import { socket } from './../../Utils/socket';
+import {socket} from "./../../Utils/socket";
 
 function Board(props) {
-    
     useEffect(() => {
         console.log("props", props);
         const {id} = props.match.params;
@@ -17,7 +16,7 @@ function Board(props) {
         const {id} = props.match.params;
         socket.emit("connected", {key: id});
         socket.on("changeBoardData", data => {
-            console.log(data)
+            console.log(data);
             if (!!data) {
                 props.fetchBoard(id);
             }
@@ -27,7 +26,7 @@ function Board(props) {
     return (
         <div className="board-cont-main">
             <div className="board-head">
-    <h4>{props?.board?.title}</h4>
+                <h4>{props?.board?.title}</h4>
             </div>
             <div className="columns-cont-main d-flex">
                 <Column _id={props?.match?.params?.id} />
@@ -35,8 +34,8 @@ function Board(props) {
         </div>
     );
 }
-const mapStateToProps = ({board} )=> ({
-    board:board.board
+const mapStateToProps = ({board}) => ({
+    board: board.board,
 });
 
 const mapDispatchToProps = dispatch => {
