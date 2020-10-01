@@ -19,6 +19,11 @@ function Profile({user}) {
     const handleModalCancel = () => {
         setModalVisible(false);
     };
+        const handleLogout = () => {
+            localStorage.clear();
+            window.location.href = "/login";
+        };
+     
     return (
         <div className="profile-dash-cont">
             <div className="dash-menu-cont">
@@ -45,7 +50,7 @@ function Profile({user}) {
                     <div onClick={() => setDashView(2)}>
                         <MenuItem icon={<EditOutlined />} name="Edit Profile" />
                     </div>
-                    <div onClick={() => console.log("Logout")}>
+                    <div onClick={handleLogout}>
                         <MenuItem icon={<LogoutOutlined />} name="Logout" />
                     </div>
                 </div>
