@@ -242,7 +242,7 @@ function Column({board, _id, user}) {
                     );
                 })}
             </DragDropContext>
-            {(!isAuth() && !(user?.email == board?.owner)) ||
+            {board?.owner? (!isAuth() && !(user?.email == board?.owner)) ||
                 (!board?.team?.includes(user?.email) && (
                     <div
                         className="column-main pl-5 pr-5"
@@ -257,7 +257,7 @@ function Column({board, _id, user}) {
                             Add New Column
                         </Button>
                     </div>
-                ))}
+                )):null}
         </>
     );
 }
