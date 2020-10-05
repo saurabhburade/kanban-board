@@ -13,6 +13,7 @@ import BoardCard from "./BoardCard";
 import {Button} from "antd";
 import UserProfile from "./../UserProfile/UserProfile";
 import AddBoardModal from "./../AddBoard/AddBoardModal";
+import UpdateProfile from './UpdateProfile';
 function Profile({user}) {
     const [dashView, setDashView] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
@@ -95,14 +96,11 @@ function Profile({user}) {
                 />
             ) : (
                 <div className="boards-main-cont">
-                    <Button
-                        shape="round"
-                        icon={<AppstoreAddOutlined />}
-                        size={"middle"}
-                        className="ml-5"
-                    >
-                        Edit profile
-                    </Button>
+                    <UpdateProfile
+                    
+                        fname={user?.fname}
+                        lname={user?.lname}
+                    />
                 </div>
             )}
 
