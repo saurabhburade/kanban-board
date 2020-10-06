@@ -114,3 +114,23 @@ export const deleteTask = (data, cb) => {
             message.error("Failed");
         });
 };
+export const updateColumnDetails = (data,cb) => {
+    console.log(data);
+    Axios.patch("/api/board/column/update/details", data, {
+        headers: {
+            "Content-type": "application/json",
+            token: localStorage.getItem("token"),
+        },
+    })
+        .then(res => {
+            console.log(res);
+            cb("success");
+            message.success("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            cb("error");
+            message.error("Failed");
+        });
+};
+

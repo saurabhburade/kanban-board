@@ -3,7 +3,11 @@ import "./column.css";
 import TaskCard from "./../TaskCard/TaskCard";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {Tag, Button, Tooltip} from "antd";
-import {FileAddOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
+import {
+    FileAddOutlined,
+    ExclamationCircleOutlined,
+    EditTwoTone,
+} from "@ant-design/icons";
 
 import {connect} from "react-redux";
 import {updateOnTaskMove} from "./../../../Utils/boardHelpers";
@@ -12,6 +16,7 @@ import AddTaskModal from "./../TaskCard/AddTaskModal";
 import confirm from "antd/lib/modal/confirm";
 import AddColumnModal from "./../AddColumnModal/AddColumnModal";
 import {isAuth} from "./../../../Utils/auth";
+import EditColumnModal from './EditColumnModal';
 
 function Column({board, _id, user}) {
     // const [columns, setColumns] = useState(board?.columns);
@@ -19,7 +24,7 @@ function Column({board, _id, user}) {
     const [modalVisible, setModalVisible] = useState(false);
     const [activeColumnName, setactiveColumnName] = useState("");
     const [addColumnVisible, setaddColumnVisible] = useState(false);
-
+const [editColumnNameModal, seteditColumnNameModal] = useState(false)
     const handleModalCancel = () => {
         setModalVisible(false);
     };
@@ -100,6 +105,7 @@ function Column({board, _id, user}) {
     const handleAddColumnModalCancel = () => {
         setaddColumnVisible(false);
     };
+    
     return (
         <>
             <AddColumnModal
@@ -118,29 +124,62 @@ function Column({board, _id, user}) {
                                 key={i}
                                 _id={_id}
                             />
+                            <EditColumnModal
+                                modalVisible={editColumnNameModal}
+                                onCancel={()=>seteditColumnNameModal(false)}
+                                columnName={activeColumnName}
+                                _id={_id}
+                            />
                             <div className="col-head w-100 d-flex justify-content-between pl-3 pr-3   ">
                                 <h5>{columnItem.columnName}</h5>
-                                <Tooltip title="Add task">
-                                    <Button
-                                        disabled={
-                                            !(
-                                                isAuth() &&
-                                                (user?.email == board?.owner ||
-                                                    board?.team?.includes(
-                                                        user?.email
-                                                    ))
-                                            )
-                                        }
-                                        icon={<FileAddOutlined />}
-                                        shape="circle"
-                                        onClick={() => {
-                                            setModalVisible(true);
-                                            setactiveColumnName(
-                                                columnItem?.columnName
-                                            );
-                                        }}
-                                    />
-                                </Tooltip>
+                                <div className="d-flex">
+                                    <Tooltip title="Add task">
+                                        <Button
+                                            disabled={
+                                                !(
+                                                    isAuth() &&
+                                                    (user?.email ==
+                                                        board?.owner ||
+                                                        board?.team?.includes(
+                                                            user?.email
+                                                        ))
+                                                )
+                                            }
+                                            icon={<FileAddOutlined />}
+                                            shape="circle"
+                                            onClick={() => {
+                                                setModalVisible(true);
+                                                setactiveColumnName(
+                                                    columnItem?.columnName
+                                                );
+                                            }}
+                                            className="mr-3"
+                                        />
+                                    </Tooltip>
+                                    <Tooltip title="Add task">
+                                        <Button
+                                            disabled={
+                                                !(
+                                                    isAuth() &&
+                                                    (user?.email ==
+                                                        board?.owner ||
+                                                        board?.team?.includes(
+                                                            user?.email
+                                                        ))
+                                                )
+                                            }
+                                            icon={<EditTwoTone />}
+                                            shape="circle"
+                                            onClick={() => {
+                                                seteditColumnNameModal(true);
+                                                setactiveColumnName(
+                                                    columnItem?.columnName
+                                                );
+                                            }}
+                                            
+                                        />
+                                    </Tooltip>
+                                </div>
                             </div>
                             <Droppable
                                 droppableId={columnItem.columnName}
