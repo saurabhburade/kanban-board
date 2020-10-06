@@ -227,6 +227,23 @@ const deleteTask = (req, res) => {
             res.status(400).json({message: "failed"});
         });
 };
+const updateColumnDetails = (req, res) => {
+    console.log("object", req.body);
+    const {_id, columnName, newColumnName} = req.body;
+    Board.updateOne(
+        {_id, "columns.columnName": columnName},
+        {$set: {"columns.$.columnName": newColumnName}}
+    )
+        .then(doc => {
+            console.log("docxx", doc);
+            res.status(200).json({message: "success"});
+        })
+        .catch(err => {
+            console.log("errxx", err);
+            res.status(400).json({message: "failed"});
+        });
+};
+
 module.exports = {
     createBoard,
     deleteBoard,
@@ -235,4 +252,5 @@ module.exports = {
     addTask,
     updateTaskMove,
     deleteTask,
+    updateColumnDetails,
 };
