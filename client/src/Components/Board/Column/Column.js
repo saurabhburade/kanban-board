@@ -126,7 +126,7 @@ const [editColumnNameModal, seteditColumnNameModal] = useState(false)
                             />
                             <EditColumnModal
                                 modalVisible={editColumnNameModal}
-                                onCancel={()=>seteditColumnNameModal(false)}
+                                onCancel={() => seteditColumnNameModal(false)}
                                 columnName={activeColumnName}
                                 _id={_id}
                             />
@@ -156,7 +156,7 @@ const [editColumnNameModal, seteditColumnNameModal] = useState(false)
                                             className="mr-3"
                                         />
                                     </Tooltip>
-                                    <Tooltip title="Add task">
+                                    <Tooltip title="Edit Column">
                                         <Button
                                             disabled={
                                                 !(
@@ -176,7 +176,6 @@ const [editColumnNameModal, seteditColumnNameModal] = useState(false)
                                                     columnItem?.columnName
                                                 );
                                             }}
-                                            
                                         />
                                     </Tooltip>
                                 </div>

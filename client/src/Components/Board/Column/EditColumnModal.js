@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Modal from "antd/lib/modal/Modal";
 import {Input} from "antd";
 import {notification} from "antd";
@@ -6,7 +6,10 @@ import {updateColumnDetails} from "./../../../Utils/boardHelpers";
 
 function EditColumnModal({modalVisible, onCancel, _id, columnName}) {
     console.log(columnName);
-    const [newColName, setnewColName] = useState(columnName);
+    const [newColName, setnewColName] = useState("");
+    useEffect(() => {
+        setnewColName(columnName);
+    }, [columnName]);
     const handleOk = e => {
         e.preventDefault();
         const data = {
@@ -43,7 +46,7 @@ function EditColumnModal({modalVisible, onCancel, _id, columnName}) {
                         <Input
                             type="text"
                             value={newColName}
-                            onChange={v => setnewColName(v)}
+                            onChange={e=> setnewColName(e.target.value)}
                             name="newColumnName"
                             required
                         />
