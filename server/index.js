@@ -12,6 +12,7 @@ const userRoutes = require("./routes/user.routes");
 const boardRoutes = require("./routes/board.routes");
 const {uri, dbName} = require("./configs/db.config");
 const Board = require("./models/board.model");
+const path = require("path");
 console.log(uri, dbName);
 
 mongoose.connect(
@@ -82,6 +83,16 @@ io.on("connection", function (socket) {
 // API routes
 app.use("/api/user", userRoutes);
 app.use("/api/board", boardRoutes);
+
+//Deployment path
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../client", "build")));
+    app.get("*", (req, res) => {
+        res.sendFile(
+            path.resolve(__dirname, "../client", "build", "index.html")
+        );
+    });
+}
 
 http.listen(PORT, err => {
     if (err) throw err;
