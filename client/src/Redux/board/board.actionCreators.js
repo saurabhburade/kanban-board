@@ -4,7 +4,7 @@ import  Axios  from 'axios';
 
 export const fetchBoard = data => {
     return dispatch => {
-        Axios.get("http://localhost:8000/api/board/public/" + data, {
+        Axios.get("/api/board/public/" + data, {
             headers: {
                 "Content-type": "application/json",
             },
