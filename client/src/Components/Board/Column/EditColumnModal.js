@@ -33,7 +33,7 @@ function EditColumnModal({modalVisible, onCancel, _id, columnName}) {
         <div>
             <Modal
                 visible={modalVisible}
-                title="Add New Column"
+                title="Update Column Name 🖊"
                 onOk={handleOk}
                 onCancel={onCancel}
                 footer={null}
