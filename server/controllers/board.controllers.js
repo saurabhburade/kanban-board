@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const Board = require("../models/board.model");
 const mongoose = require("mongoose");
+const Checklist = require("../models/checklist.model");
 
 const createBoard = (req, res) => {
     const {title, owner} = req.body;
@@ -168,6 +169,7 @@ const addTask = (req, res) => {
                                 description,
                                 created: new Date(),
                                 modified: new Date(),
+                                checklist: new  Checklist(),
                             },
                         },
                     }
