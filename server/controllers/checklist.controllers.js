@@ -25,6 +25,26 @@ const addOneCheck = (req, res) => {
         });
 };
 
+const fetchChecklist = (req, res) => {
+    const {_id} = req.body;
+  
+    Checklist.findOne(
+        {_id}
+    )
+        .then(doc => {
+            console.log(doc);
+            if (!!doc) {
+                res.status(200).json(doc);
+            } else {
+                res.status(400).json({message:"No Checklist Found"});
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json({message: "Failed to find Checklist"});
+        });
+};
+
 const updateOneCheck = (req, res) => {
     console.log(req.body);
     const {_id, value, checked} = req.body;
@@ -68,4 +88,4 @@ const deleteOneCheck = (req, res) => {
             res.status(400).json({message: "Failed to delete"});
         });
 };
-module.exports = {addOneCheck, updateOneCheck, deleteOneCheck};
+module.exports = {addOneCheck, fetchChecklist, updateOneCheck, deleteOneCheck};
