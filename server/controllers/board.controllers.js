@@ -159,30 +159,32 @@ const addTask = (req, res) => {
                 });
 
             if (!!doc && present && !presentTask) {
-                Board.update(
-                    {_id, "columns.columnName": columnName},
-                    {
-                        $push: {
-                            "columns.$.tasks": {
-                                title,
-                                label,
-                                description,
-                                created: new Date(),
-                                modified: new Date(),
-                                checklist: new  Checklist(),
+                new Checklist().save((err, doc) => {
+                    Board.update(
+                        {_id, "columns.columnName": columnName},
+                        {
+                            $push: {
+                                "columns.$.tasks": {
+                                    title,
+                                    label,
+                                    description,
+                                    created: new Date(),
+                                    modified: new Date(),
+                                    checklist: doc._id,
+                                },
                             },
-                        },
-                    }
-                )
-                    .then(doc => {
-                        res.status(200).json(doc);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        res.status(400).json({
-                            Error: "Something went wrong",
+                        }
+                    )
+                        .then(doc => {
+                            res.status(200).json(doc);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(400).json({
+                                Error: "Something went wrong",
+                            });
                         });
-                    });
+                });
             } else {
                 res.status(400).json({Error: "Already Exist"});
             }
