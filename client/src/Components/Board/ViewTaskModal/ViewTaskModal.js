@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Modal from "antd/lib/modal/Modal";
 import {Badge, Button, Divider} from "antd";
 import {Input, Tooltip} from "antd";
@@ -10,6 +10,7 @@ import {
     ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import confirm from "antd/lib/modal/confirm";
+import { fetchChecklist } from '../../../Utils/checklist.helper';
 
 function ViewTaskModal({
     modalVisible,
@@ -23,7 +24,9 @@ function ViewTaskModal({
     _id,
     tasks,
     deleteTaskBtn,
+    checklist
 }) {
+    const [checklistInit, setchecklistInit] = useState([]);
     const showConfirm = _ => {
         confirm({
             title: `Do you Want to delete this Task ?`,
@@ -46,7 +49,15 @@ function ViewTaskModal({
                 );
             },
         });
+        
     };
+    useEffect(() => {
+        console.log("fetch")
+        fetchChecklist(checklist, d => {
+            setchecklistInit(d.data)
+            console.log(d);
+        });
+    }, [checklist]);
     return (
         // <div>
         <Modal
@@ -80,6 +91,12 @@ function ViewTaskModal({
                         </Button>
                     )}
                 </div>
+            </div>
+
+            <div>
+                {checklistInit?.map((element, index) => {
+                    return <p>{element.value}</p>;
+                })}
             </div>
         </Modal>
         // </div>
