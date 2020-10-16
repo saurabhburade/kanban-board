@@ -26,7 +26,7 @@ const addOneCheck = (req, res) => {
 };
 
 const fetchChecklist = (req, res) => {
-    const {_id} = req.body;
+    const {_id} = req.headers;
   
     Checklist.findOne(
         {_id}
