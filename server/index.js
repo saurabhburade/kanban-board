@@ -10,6 +10,7 @@ const io = require("socket.io")(http);
 const User = require("./models/user.model");
 const userRoutes = require("./routes/user.routes");
 const boardRoutes = require("./routes/board.routes");
+const checklistRoutes = require("./routes/checklist.routes");
 const {uri, dbName} = require("./configs/db.config");
 const Board = require("./models/board.model");
 const path = require("path");
@@ -83,6 +84,7 @@ io.on("connection", function (socket) {
 // API routes
 app.use("/api/user", userRoutes);
 app.use("/api/board", boardRoutes);
+app.use("/api/board/task/checklist/", checklistRoutes);
 
 //Deployment path
 if (process.env.NODE_ENV === "production") {
