@@ -5,7 +5,7 @@ const addOneCheck = (req, res) => {
         value,
         checked,
     };
-    Checklist.findOneAndUpdate(
+    Checklist.update(
         {_id},
         {
             $push: {data: newCheck},
