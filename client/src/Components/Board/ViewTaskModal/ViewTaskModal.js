@@ -10,7 +10,8 @@ import {
     ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import confirm from "antd/lib/modal/confirm";
-import { fetchChecklist } from '../../../Utils/checklist.helper';
+import {fetchChecklist, updateChecklist} from "../../../Utils/checklist.helper";
+import {Checkbox} from "antd";
 
 function ViewTaskModal({
     modalVisible,
@@ -24,7 +25,7 @@ function ViewTaskModal({
     _id,
     tasks,
     deleteTaskBtn,
-    checklist
+    checklist,
 }) {
     const [checklistInit, setchecklistInit] = useState([]);
     const showConfirm = _ => {
@@ -49,17 +50,34 @@ function ViewTaskModal({
                 );
             },
         });
-        
     };
     useEffect(() => {
-        console.log("fetch")
-        fetchChecklist(checklist, d => {
-            setchecklistInit(d.data)
-            console.log(d);
+        console.log("fetch");
+        if (!!checklist) {
+            fetchChecklist(checklist, d => {
+                setchecklistInit(d.data);
+                console.log(d);
+            });
+        }
+    }, []);
+    const onCheck = (d, _id, value) => {
+        console.log(d.target.checked, _id, value);
+        const data = {
+            _id,
+            value,
+            checked: d.target.checked,
+        };
+        updateChecklist(data, val => {
+            setchecklistInit(val.data);
+               fetchChecklist(checklist, res => {
+                   setchecklistInit(res.data);
+                   console.log(res);
+               });
+            console.log(val);
         });
-    }, [checklist]);
+    };
     return (
-        // <div>
+        <div>
         <Modal
             visible={modalVisible}
             title={<strong>{title}</strong>}
@@ -95,11 +113,18 @@ function ViewTaskModal({
 
             <div>
                 {checklistInit?.map((element, index) => {
-                    return <p>{element.value}</p>;
+                    return (
+                        <Checkbox
+                            checked={element.checked}
+                            onChange={d => onCheck(d, _id, element.value)}
+                        >
+                            {element.value}
+                        </Checkbox>
+                    );
                 })}
             </div>
         </Modal>
-        // </div>
+     </div>
     );
 }
 

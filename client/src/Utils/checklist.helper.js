@@ -19,3 +19,23 @@ export const fetchChecklist = (_id, cb) => {
 
         });
 };
+
+
+export const updateChecklist = (data, cb) => {
+    Axios.patch("/api/board/task/checklist/update", data, {
+        headers: {
+            "Content-type": "application/json",
+            token: localStorage.getItem("token"),
+        },
+    })
+        .then(res => {
+            console.log(res);
+            cb("success");
+            message.success("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            cb("error");
+            message.error("Failed to add board");
+        });
+};
