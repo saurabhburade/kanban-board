@@ -11,7 +11,8 @@ function TaskCard(props) {
     return (
         <>
             <ViewTaskModal
-            {...props}
+                {...props}
+                activeId={props.checklist}
                 modalVisible={viewColumnVisible}
                 onCancel={handleViewColumnModalCancel}
             />

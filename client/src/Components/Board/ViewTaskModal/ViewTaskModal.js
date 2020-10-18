@@ -25,7 +25,7 @@ function ViewTaskModal({
     _id,
     tasks,
     deleteTaskBtn,
-    checklist,
+    activeId,
 }) {
     const [checklistInit, setchecklistInit] = useState([]);
     const showConfirm = _ => {
@@ -53,23 +53,24 @@ function ViewTaskModal({
     };
     useEffect(() => {
         console.log("fetch");
-        if (!!checklist) {
-            fetchChecklist(checklist, d => {
+        if (!!activeId) {
+            fetchChecklist(activeId, d => {
                 setchecklistInit(d.data);
                 console.log(d);
             });
         }
     }, []);
-    const onCheck = (d, _id, value) => {
-        console.log(d.target.checked, _id, value);
+    const onCheck = (d, value,index) => {
+        console.log(d.target.checked, value);
         const data = {
-            _id,
+            _id:activeId,
             value,
             checked: d.target.checked,
+            index,
         };
         updateChecklist(data, val => {
             setchecklistInit(val.data);
-               fetchChecklist(checklist, res => {
+               fetchChecklist(activeId, res => {
                    setchecklistInit(res.data);
                    console.log(res);
                });
@@ -116,7 +117,7 @@ function ViewTaskModal({
                     return (
                         <Checkbox
                             checked={element.checked}
-                            onChange={d => onCheck(d, _id, element.value)}
+                            onChange={d => onCheck(d, element.value, index)}
                         >
                             {element.value}
                         </Checkbox>
