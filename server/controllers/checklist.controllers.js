@@ -1,3 +1,4 @@
+const {Mongoose} = require("mongoose");
 const Checklist = require("../models/checklist.model");
 const addOneCheck = (req, res) => {
     const {_id, value, checked} = req.body;
@@ -27,16 +28,14 @@ const addOneCheck = (req, res) => {
 
 const fetchChecklist = (req, res) => {
     const {_id} = req.headers;
-  
-    Checklist.findOne(
-        {_id}
-    )
+
+    Checklist.findOne({_id})
         .then(doc => {
             console.log(doc);
             if (!!doc) {
                 res.status(200).json(doc);
             } else {
-                res.status(400).json({message:"No Checklist Found"});
+                res.status(400).json({message: "No Checklist Found"});
             }
         })
         .catch(err => {
@@ -47,12 +46,15 @@ const fetchChecklist = (req, res) => {
 
 const updateOneCheck = (req, res) => {
     console.log(req.body);
-    const {_id, value, checked} = req.body;
-
+    const {_id, value, checked, index} = req.body;
+    let selector = {};
+    selector["data." + index + ".checked"] = checked;
     Checklist.update(
-        {_id, "data.value": value},
         {
-            $set: {"data.$.checked": checked},
+            _id,
+        },
+        {
+            $set: {...selector},
         }
     )
         .then(doc => {
