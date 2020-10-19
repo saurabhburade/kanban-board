@@ -7,6 +7,14 @@ import Column from "./Column/Column";
 import {socket} from "./../../Utils/socket";
 import Badge from "../Presentational/Badge/Badge";
 import {MergeCellsOutlined} from "@ant-design/icons";
+import { Button } from 'antd';
+import { isAuth } from '../../Utils/auth';
+import { Tooltip } from 'antd';
+import {
+    FileAddOutlined,
+    ExclamationCircleOutlined,
+    EditTwoTone,
+} from "@ant-design/icons";
 function Board(props) {
     useEffect(() => {
         console.log("props", props);
@@ -38,6 +46,22 @@ function Board(props) {
                     {props.board?.team?.map(element => {
                         return <Badge title={element} />;
                     })}
+                    <Tooltip className="p-0 m-0 ml-2" title="Add team member">
+                        <Button
+                            disabled={
+                                !(
+                                    isAuth() &&
+                                    (props.user?.email == props.board?.owner ||
+                                        props.board?.team?.includes(
+                                            props.user?.email
+                                        ))
+                                )
+                            }
+                            icon={<FileAddOutlined />}
+                            shape="circle"
+                            size="small"
+                        />
+                    </Tooltip>
                 </div>
             </div>
             <div className="columns-cont-main d-flex">
@@ -46,8 +70,9 @@ function Board(props) {
         </div>
     );
 }
-const mapStateToProps = ({board}) => ({
+const mapStateToProps = ({board, user}) => ({
     board: board.board,
+    user: user.user,
 });
 
 const mapDispatchToProps = dispatch => {
