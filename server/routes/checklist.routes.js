@@ -5,9 +5,12 @@ const {
     updateOneCheck,
     deleteOneCheck,
     fetchChecklist,
+    createChecklist,
 } = require("../controllers/checklist.controllers");
 //jwt verification middleware
 router.use(verifyJwt);
+//Add single check to the checklist
+router.post("/create", createChecklist);
 //Add single check to the checklist
 router.post("/add", addOneCheck);
 //Fetch the checklist
