@@ -143,24 +143,26 @@ function ViewTaskModal({
                                 <div className="check-container">
                                     {checklistInit.map((element, index) => {
                                         return (
-                                            <Checkbox
-                                                checked={element.checked}
-                                                onChange={d =>
-                                                    onCheck(
-                                                        d,
-                                                        element.value,
-                                                        index
-                                                    )
-                                                }
-                                            >
-                                                {element.checked ? (
-                                                    <strike>
-                                                        {element.value}
-                                                    </strike>
-                                                ) : (
-                                                    element.value
-                                                )}
-                                            </Checkbox>
+                                            <div className="checklist-item">
+                                                <Checkbox
+                                                    checked={element.checked}
+                                                    onChange={d =>
+                                                        onCheck(
+                                                            d,
+                                                            element.value,
+                                                            index
+                                                        )
+                                                    }
+                                                >
+                                                    {element.checked ? (
+                                                        <strike>
+                                                            {element.value}
+                                                        </strike>
+                                                    ) : (
+                                                        element.value
+                                                    )}
+                                                </Checkbox>
+                                            </div>
                                         );
                                     })}
 

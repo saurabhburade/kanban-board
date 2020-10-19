@@ -5,7 +5,10 @@
 .ant-checkbox-wrapper + .ant-checkbox-wrapper {
     margin: 0em !important;
 }
-
+.checklist-item{
+    padding: 1% 0% !important;
+    
+}
 .checklist-title-cont > h4 {
     font-weight: 500;
     font-size: 1.1em;
