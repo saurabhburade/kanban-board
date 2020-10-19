@@ -39,3 +39,44 @@ export const updateChecklist = (data, cb) => {
             message.error("Failed to add board");
         });
 };
+
+
+
+export const createFirstChecklist = (data, cb) => {
+    Axios.post("/api/board/task/checklist/create", data, {
+        headers: {
+            "Content-type": "application/json",
+            token: localStorage.getItem("token"),
+        },
+    })
+        .then(res => {
+            console.log(res);
+            cb("success");
+            message.success("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            cb("error");
+            message.error("Failed to create checklist");
+        });
+};
+
+
+export const addToChecklist = (data, cb) => {
+    Axios.post("/api/board/task/checklist/add", data, {
+        headers: {
+            "Content-type": "application/json",
+            token: localStorage.getItem("token"),
+        },
+    })
+        .then(res => {
+            console.log(res);
+            cb("success");
+            message.success("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            cb("error");
+            message.error("Failed to create checklist");
+        });
+};
