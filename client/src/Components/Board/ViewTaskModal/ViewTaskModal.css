@@ -1,0 +1,16 @@
+.check-container {
+    display: flex;
+    flex-direction: column;
+}
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin: 0em !important;
+}
+
+.checklist-title-cont > h4 {
+    font-weight: 500;
+    font-size: 1.1em;
+    margin-left: 1%;
+    padding: 0% 2%;
+    background: lightcyan;
+    border-radius: 10px;
+}
