@@ -37,3 +37,15 @@ span {
     background-color: rgb(216, 216, 216);
     height: 2em;
 }
+.ant-modal-close{
+    outline: none !important;
+}
+.ant-modal-close:hover{
+     border-radius: 50%;
+    background:lightcyan;
+    
+}
+.ant-modal-close:active{
+    outline: none !important;
+   
+}
