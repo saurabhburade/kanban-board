@@ -7,13 +7,17 @@ import {
     LogoutOutlined,
     AppstoreAddOutlined,
 } from "@ant-design/icons";
-import MenuItem from "./MenuItem";
 import {connect} from "react-redux";
-import BoardCard from "./BoardCard";
 import {Button} from "antd";
-import UserProfile from "./../UserProfile/UserProfile";
-import AddBoardModal from "./../AddBoard/AddBoardModal";
+import {
+    BoardCard,
+    UserProfile,
+    AddBoardModal,
+    MenuItem,
+} from "../LoadableComponents/index";
+
 import UpdateProfile from './UpdateProfile';
+
 function Profile({user}) {
     const [dashView, setDashView] = useState(0);
     const [modalVisible, setModalVisible] = useState(false);
