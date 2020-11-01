@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import "./column.css";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {Button, Tooltip} from "antd";
-import {FileAddOutlined} from "@ant-design/icons";
+import {FileAddOutlined, EditTwoTone} from "@ant-design/icons";
 
 import {connect} from "react-redux";
 import {updateOnTaskMove} from "./../../../Utils/boardHelpers";
