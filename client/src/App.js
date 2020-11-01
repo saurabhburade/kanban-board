@@ -1,17 +1,21 @@
 import React, {useState, useEffect} from "react";
 import socketIOClient from "socket.io-client";
-import Header from "./Components/Header/Header";
 import {BrowserRouter as Router, Route, Link, Switch} from "react-router-dom";
-import Login from "./Components/Login/Login";
-import SignUp from "./Components/SignUp/SignUp";
-import Home from "./Components/home/Home";
+
 import "./App.css";
-import Profile from "./Components/Profile/Profile";
 import {fetchUser} from "./Redux/user/user.actionCreators";
 import {connect} from "react-redux";
 import {isAuth} from "./Utils/auth";
-import Board from './Components/Board/Board';
+// import Board from './Components/Board/Board';
 import { socket } from './Utils/socket';
+import {
+    Login,
+    SignUp,
+    Board,
+    Profile,
+    Home,
+    Header,
+} from "./Components/LoadableComponents/index";
 function App(props) {
     const [response, setResponse] = useState("");
 

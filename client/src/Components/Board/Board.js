@@ -3,7 +3,7 @@ import "./board.css";
 import {useEffect} from "react";
 import {connect} from "react-redux";
 import {fetchBoard} from "./../../Redux/board/board.actionCreators";
-import Column from "./Column/Column";
+import { Column } from '../LoadableComponents/index';
 import {socket} from "./../../Utils/socket";
 import Badge from "../Presentational/Badge/Badge";
 import {MergeCellsOutlined} from "@ant-design/icons";
