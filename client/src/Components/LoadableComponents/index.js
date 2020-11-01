@@ -28,6 +28,7 @@ export const Column = Loadable({
 export const TaskCard = Loadable({
     loader: () => import("../Board/TaskCard/TaskCard"),
     loading: SpinLoad,
+
 });
 
 export const AddTaskModal = Loadable({
