@@ -3,8 +3,8 @@ import "./board.css";
 import {useEffect} from "react";
 import {connect} from "react-redux";
 import {fetchBoard} from "./../../Redux/board/board.actionCreators";
-import Column from "./Column/Column";
 import { socket } from './../../Utils/socket';
+import { Column } from '../LoadableComponents/index';
 
 function Board(props) {
     

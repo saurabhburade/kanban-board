@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from "react";
 import "./column.css";
-import TaskCard from "./../TaskCard/TaskCard";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
-import {Tag, Button, Tooltip} from "antd";
-import {FileAddOutlined, ExclamationCircleOutlined} from "@ant-design/icons";
+import {Button, Tooltip} from "antd";
+import {FileAddOutlined} from "@ant-design/icons";
 
 import {connect} from "react-redux";
 import {updateOnTaskMove} from "./../../../Utils/boardHelpers";
-import AddBoardModal from "./../../AddBoard/AddBoardModal";
-import AddTaskModal from './../TaskCard/AddTaskModal';
-import confirm from "antd/lib/modal/confirm";
-import AddColumnModal from './../AddColumnModal/AddColumnModal';
+import {
+    TaskCard,
+    AddTaskModal,
+    AddColumnModal,
+} from "../../LoadableComponents/index";
 
 function Column({board, _id}) {
     const [columns, setColumns] = useState(board?.columns);
