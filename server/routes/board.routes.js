@@ -8,6 +8,8 @@ const {
     addTask,
     deleteBoard,
     updateTaskMove,
+    deleteTask,
+    updateColumnDetails,
 } = require("../controllers/board.controllers");
 
 //get public board
@@ -23,4 +25,8 @@ router.post("/update/task/move", updateTaskMove);
 router.post("/add/column", addColumn);
 //add column
 router.post("/add/column/task", addTask);
+//delete task
+router.post("/delete/column/task", deleteTask); 
+//update column details 
+router.patch("/column/update/details", updateColumnDetails);
 module.exports = router;

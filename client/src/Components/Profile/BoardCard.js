@@ -9,6 +9,7 @@ import { Button } from 'antd';
 import { useState } from 'react';
 import confirm from 'antd/lib/modal/confirm';
 import { deleteBoard } from '../../Utils/boardHelpers';
+import { Link } from 'react-router-dom';
 
 function BoardCard({name,_id}) {
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
@@ -32,7 +33,9 @@ function BoardCard({name,_id}) {
         <div className="p-board-card">
             <p>{name}</p>
             <div>
-                <Button icon={<EyeOutlined />} size={"middle"} />
+                <Link to={`/boards/${_id}`}>
+                    <Button icon={<EyeOutlined />} size={"middle"} />
+                </Link>
                 <Button
                     type="danger"
                     icon={<DeleteOutlined />}

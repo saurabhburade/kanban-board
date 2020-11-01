@@ -1,17 +1,17 @@
-import React from 'react'
-import "./UserProfile.css"
-function UserProfile() {
+import React from "react";
+import "./UserProfile.css";
+function UserProfile({name, email, initial}) {
     return (
         <div className="user-profile-cont">
             <div className="user-details">
                 <div className="user-initial">
-                    <p> SB</p>
-                    <p>Saurabh Burade</p>
+                    <p> {initial}</p>
+                    <p>{name}</p>
                 </div>
-                <p>Email : Saurabh Burade</p>
+                <p>Email : {email}</p>
             </div>
         </div>
     );
 }
 
-export default UserProfile
+export default UserProfile;

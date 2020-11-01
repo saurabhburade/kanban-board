@@ -1,6 +1,7 @@
 const User = require("../models/user.model");
 const Board = require("../models/board.model");
 const mongoose = require("mongoose");
+const Checklist = require("../models/checklist.model");
 
 const createBoard = (req, res) => {
     const {title, owner} = req.body;
@@ -158,29 +159,32 @@ const addTask = (req, res) => {
                 });
 
             if (!!doc && present && !presentTask) {
-                Board.update(
-                    {_id, "columns.columnName": columnName},
-                    {
-                        $push: {
-                            "columns.$.tasks": {
-                                title,
-                                label,
-                                description,
-                                created: new Date(),
-                                modified: new Date(),
+                new Checklist().save((err, doc) => {
+                    Board.update(
+                        {_id, "columns.columnName": columnName},
+                        {
+                            $push: {
+                                "columns.$.tasks": {
+                                    title,
+                                    label,
+                                    description,
+                                    created: new Date(),
+                                    modified: new Date(),
+                                    checklist: doc._id,
+                                },
                             },
-                        },
-                    }
-                )
-                    .then(doc => {
-                        res.status(200).json(doc);
-                    })
-                    .catch(err => {
-                        console.log(err);
-                        res.status(400).json({
-                            Error: "Something went wrong",
+                        }
+                    )
+                        .then(doc => {
+                            res.status(200).json(doc);
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            res.status(400).json({
+                                Error: "Something went wrong",
+                            });
                         });
-                    });
+                });
             } else {
                 res.status(400).json({Error: "Already Exist"});
             }
@@ -191,8 +195,8 @@ const addTask = (req, res) => {
 };
 const updateTaskMove = (req, res) => {
     console.log(req.body);
-    const {_id,columns} = req.body;
-    
+    const {_id, columns} = req.body;
+
     Board.update(
         {_id},
         {
@@ -211,6 +215,39 @@ const updateTaskMove = (req, res) => {
             });
         });
 };
+const deleteTask = (req, res) => {
+    console.log(req.body);
+    const {_id, columnName, tasks} = req.body;
+    Board.updateOne(
+        {_id, "columns.columnName": columnName},
+        {$set: {"columns.$.tasks": tasks}}
+    )
+        .then(doc => {
+            console.log("docxx", doc);
+            res.status(200).json({message: "success"});
+        })
+        .catch(err => {
+            console.log("errxx", err);
+            res.status(400).json({message: "failed"});
+        });
+};
+const updateColumnDetails = (req, res) => {
+    console.log("object", req.body);
+    const {_id, columnName, newColumnName} = req.body;
+    Board.updateOne(
+        {_id, "columns.columnName": columnName},
+        {$set: {"columns.$.columnName": newColumnName}}
+    )
+        .then(doc => {
+            console.log("docxx", doc);
+            res.status(200).json({message: "success"});
+        })
+        .catch(err => {
+            console.log("errxx", err);
+            res.status(400).json({message: "failed"});
+        });
+};
+
 module.exports = {
     createBoard,
     deleteBoard,
@@ -218,4 +255,6 @@ module.exports = {
     addColumn,
     addTask,
     updateTaskMove,
+    deleteTask,
+    updateColumnDetails,
 };

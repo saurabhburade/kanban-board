@@ -21,7 +21,7 @@ export const addBoard = (data, cb) => {
 };
 
 export const deleteBoard = (data, cb) => {
-    Axios.delete("http://localhost:8000/api/board/delete/" + data, {
+    Axios.delete("/api/board/delete/" + data, {
         headers: {
             "Content-type": "application/json",
             token: localStorage.getItem("token"),
@@ -40,7 +40,7 @@ export const deleteBoard = (data, cb) => {
 };
 export const updateOnTaskMove = (data, cb) => {
     console.log(data);
-    Axios.post("http://localhost:8000/api/board/update/task/move", data, {
+    Axios.post("/api/board/update/task/move", data, {
         headers: {
             "Content-type": "application/json",
             token: localStorage.getItem("token"),
@@ -59,7 +59,7 @@ export const updateOnTaskMove = (data, cb) => {
 };
 export const addTask = (data, cb) => {
     console.log(data);
-    Axios.post("http://localhost:8000/api/board/add/column/task", data, {
+    Axios.post("/api/board/add/column/task", data, {
         headers: {
             "Content-type": "application/json",
             token: localStorage.getItem("token"),
@@ -78,7 +78,7 @@ export const addTask = (data, cb) => {
 };
 export const addColumn = (data, cb) => {
     console.log(data);
-    Axios.post("http://localhost:8000/api/board/add/column", data, {
+    Axios.post("/api/board/add/column", data, {
         headers: {
             "Content-type": "application/json",
             token: localStorage.getItem("token"),
@@ -95,3 +95,42 @@ export const addColumn = (data, cb) => {
             message.error("Failed");
         });
 };
+export const deleteTask = (data, cb) => {
+    console.log(data);
+    Axios.post("/api/board/delete/column/task", data, {
+        headers: {
+            "Content-type": "application/json",
+            token: localStorage.getItem("token"),
+        },
+    })
+        .then(res => {
+            console.log(res);
+            cb("success");
+            message.success("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            cb("error");
+            message.error("Failed");
+        });
+};
+export const updateColumnDetails = (data,cb) => {
+    console.log(data);
+    Axios.patch("/api/board/column/update/details", data, {
+        headers: {
+            "Content-type": "application/json",
+            token: localStorage.getItem("token"),
+        },
+    })
+        .then(res => {
+            console.log(res);
+            cb("success");
+            message.success("Success");
+        })
+        .catch(err => {
+            console.log(err);
+            cb("error");
+            message.error("Failed");
+        });
+};
+

@@ -26,7 +26,7 @@ function AddTaskModal({modalVisible, onCancel,_id,columnName}) {
         <div>
             <Modal
                 visible={modalVisible}
-                title="Title"
+                title="Add New Task 🗂"
                 onOk={handleOk}
                 onCancel={onCancel}
                 footer={null}
@@ -42,7 +42,7 @@ function AddTaskModal({modalVisible, onCancel,_id,columnName}) {
                     </div>{" "}
                     <div>
                         <label htmlFor="description">Description </label>
-                        <Input type="text" name="description" required />
+                        <Input.TextArea type="text" name="description" required />
                     </div>
                     <br />
                     <button

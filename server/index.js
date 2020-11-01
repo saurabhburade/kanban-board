@@ -10,8 +10,10 @@ const io = require("socket.io")(http);
 const User = require("./models/user.model");
 const userRoutes = require("./routes/user.routes");
 const boardRoutes = require("./routes/board.routes");
+const checklistRoutes = require("./routes/checklist.routes");
 const {uri, dbName} = require("./configs/db.config");
 const Board = require("./models/board.model");
+const path = require("path");
 console.log(uri, dbName);
 
 mongoose.connect(
@@ -35,13 +37,14 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan());
 //socket
+const changeUserStream = User.watch();
+const changeBoardStream = Board.watch();
 
 io.on("connection", function (socket) {
     // console.log(changeStream);
     socket.on("connected", user => {
         console.log(user);
         socket.join(user.key, () => {
-            const changeUserStream = User.watch();
             changeUserStream.on("change", change => {
                 console.log(
                     change.documentKey._id,
@@ -50,43 +53,28 @@ io.on("connection", function (socket) {
                     change.documentKey._id == user.key
                 );
                 if (!!change.documentKey._id) {
-                    User.findOne({_id: change.documentKey._id})
-                        .select("-password")
-                        .select("-token")
-                        .then(doc => {
-                            io.to(socket.rooms[change.documentKey._id]).emit(
-                                "changeData",
-                                doc
-                            );
-                        })
-                        .catch(err => {
-                            console.log("err", err);
-                        });
+                    io.to(
+                        socket.rooms[change.documentKey._id]
+                    ).emit("changeData", {message: "modified"});
                 }
                 // console.log("change", change);
             });
-             const changeBoardStream = Board.watch();
-             changeBoardStream.on("change", change => {
-                 console.log(
-                     change.documentKey._id,
-                     user.key,
-                     socket.rooms[user.key],
-                     change.documentKey._id == user.key
-                 );
-                 
-                     Board.findOne({_id: change.documentKey._id})
-                         .then(doc => {
-                             io.to(socket.rooms[change.documentKey._id]).emit(
-                                 "changeBoardData",
-                                 doc
-                             );
-                         })
-                         .catch(err => {
-                             console.log("err", err);
-                         });
-                 
-                 // console.log("change", change);
-             });
+
+            changeBoardStream.on("change", change => {
+                console.log(
+                    change.documentKey._id,
+                    user.key,
+                    socket.rooms[user.key],
+                    change.documentKey._id == user.key
+                );
+                if (!!change.documentKey._id) {
+                    io.to(
+                        socket.rooms[change.documentKey._id]
+                    ).emit("changeBoardData", {message: "modified"});
+                }
+
+                // console.log("change", change);
+            });
         });
     });
 
@@ -96,6 +84,17 @@ io.on("connection", function (socket) {
 // API routes
 app.use("/api/user", userRoutes);
 app.use("/api/board", boardRoutes);
+app.use("/api/board/task/checklist/", checklistRoutes);
+
+//Deployment path
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../client", "build")));
+    app.get("*", (req, res) => {
+        res.sendFile(
+            path.resolve(__dirname, "../client", "build", "index.html")
+        );
+    });
+}
 
 http.listen(PORT, err => {
     if (err) throw err;

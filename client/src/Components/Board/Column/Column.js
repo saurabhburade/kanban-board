@@ -12,23 +12,23 @@ import {
     AddColumnModal,
 } from "../../LoadableComponents/index";
 
-function Column({board, _id}) {
-    const [columns, setColumns] = useState(board?.columns);
+import {isAuth} from "./../../../Utils/auth";
+import EditColumnModal from './EditColumnModal';
+
+function Column({board, _id, user}) {
+    // const [columns, setColumns] = useState(board?.columns);
+    let columns=board?.columns
     const [modalVisible, setModalVisible] = useState(false);
-    const [activeColumnName, setactiveColumnName] = useState("")
-        const [addColumnVisible, setaddColumnVisible] = useState(false);
-
-
+    const [activeColumnName, setactiveColumnName] = useState("");
+    const [addColumnVisible, setaddColumnVisible] = useState(false);
+const [editColumnNameModal, seteditColumnNameModal] = useState(false)
     const handleModalCancel = () => {
         setModalVisible(false);
     };
-    useEffect(() => {
-        setColumns(board?.columns);
-    }, [board]);
     console.log("board", board);
     const [taskCol, settaskCol] = useState([]);
     const dragEnd = result => {
-        console.log(result, columns, setColumns);
+        // console.log(result, columns, setColumns);
         if (!result.destination) return;
         const {source, destination} = result;
         if (source.droppableId === destination.droppableId) {
@@ -53,7 +53,7 @@ function Column({board, _id}) {
             };
             updateOnTaskMove(data, res => {
                 console.log(res);
-                setColumns(updatedColumns);
+                // setColumns(updatedColumns);
             });
             console.log(taskCol, tasks);
         } else {
@@ -82,7 +82,7 @@ function Column({board, _id}) {
                 1,
                 destinationColumn
             );
-            setColumns(updatedColumns);
+            // setColumns(updatedColumns);
             const data = {
                 _id,
                 columns: updatedColumns,
@@ -99,9 +99,10 @@ function Column({board, _id}) {
             );
         }
     };
-        const handleAddColumnModalCancel = () => {
-            setaddColumnVisible(false);
-        };
+    const handleAddColumnModalCancel = () => {
+        setaddColumnVisible(false);
+    };
+    
     return (
         <>
             <AddColumnModal
@@ -120,20 +121,61 @@ function Column({board, _id}) {
                                 key={i}
                                 _id={_id}
                             />
+                            <EditColumnModal
+                                modalVisible={editColumnNameModal}
+                                onCancel={() => seteditColumnNameModal(false)}
+                                columnName={activeColumnName}
+                                _id={_id}
+                            />
                             <div className="col-head w-100 d-flex justify-content-between pl-3 pr-3   ">
                                 <h5>{columnItem.columnName}</h5>
-                                <Tooltip title="Add task">
-                                    <Button
-                                        icon={<FileAddOutlined />}
-                                        shape="circle"
-                                        onClick={() => {
-                                            setModalVisible(true);
-                                            setactiveColumnName(
-                                                columnItem?.columnName
-                                            );
-                                        }}
-                                    />
-                                </Tooltip>
+                                <div className="d-flex">
+                                    <Tooltip title="Add task">
+                                        <Button
+                                            disabled={
+                                                !(
+                                                    isAuth() &&
+                                                    (user?.email ==
+                                                        board?.owner ||
+                                                        board?.team?.includes(
+                                                            user?.email
+                                                        ))
+                                                )
+                                            }
+                                            icon={<FileAddOutlined />}
+                                            shape="circle"
+                                            onClick={() => {
+                                                setModalVisible(true);
+                                                setactiveColumnName(
+                                                    columnItem?.columnName
+                                                );
+                                            }}
+                                            className="mr-3"
+                                        />
+                                    </Tooltip>
+                                    <Tooltip title="Edit Column">
+                                        <Button
+                                            disabled={
+                                                !(
+                                                    isAuth() &&
+                                                    (user?.email ==
+                                                        board?.owner ||
+                                                        board?.team?.includes(
+                                                            user?.email
+                                                        ))
+                                                )
+                                            }
+                                            icon={<EditTwoTone />}
+                                            shape="circle"
+                                            onClick={() => {
+                                                seteditColumnNameModal(true);
+                                                setactiveColumnName(
+                                                    columnItem?.columnName
+                                                );
+                                            }}
+                                        />
+                                    </Tooltip>
+                                </div>
                             </div>
                             <Droppable
                                 droppableId={columnItem.columnName}
@@ -157,9 +199,16 @@ function Column({board, _id}) {
                                                 (task, index) => {
                                                     return (
                                                         <Draggable
-                                                            // isDragDisabled={
-                                                            //     true
-                                                            // }
+                                                            isDragDisabled={
+                                                                !(
+                                                                    isAuth() &&
+                                                                    (user?.email ==
+                                                                        board?.owner ||
+                                                                        board?.team?.includes(
+                                                                            user?.email
+                                                                        ))
+                                                                )
+                                                            }
                                                             draggableId={
                                                                 "draggable" +
                                                                 columnItem.columnName +
@@ -188,11 +237,28 @@ function Column({board, _id}) {
                                                                         }}
                                                                     >
                                                                         <TaskCard
-                                                                            title={
-                                                                                task.title
+                                                                            _id={
+                                                                                _id
                                                                             }
-                                                                            label={
-                                                                                task.label
+                                                                            tasks={
+                                                                                columnItem?.tasks
+                                                                            }
+                                                                            {...task}
+                                                                            taskIndex={
+                                                                                index
+                                                                            }
+                                                                            columnName={
+                                                                                columnItem?.columnName
+                                                                            }
+                                                                            deleteTaskBtn={
+                                                                                !(
+                                                                                    isAuth() &&
+                                                                                    (user?.email ==
+                                                                                        board?.owner ||
+                                                                                        board?.team?.includes(
+                                                                                            user?.email
+                                                                                        ))
+                                                                                )
                                                                             }
                                                                         />
                                                                     </div>
@@ -211,21 +277,28 @@ function Column({board, _id}) {
                     );
                 })}
             </DragDropContext>
-            <div className="column-main pl-5 pr-5" style={{width:"400px",height: "fit-content"}}>
-                <Button
-                    icon={<FileAddOutlined />}
-                    onClick={() => {
-                        setaddColumnVisible(true);
-                    }}
-                >
-                    Add New Column
-                </Button>
-            </div>
+            {board?.owner? (!isAuth() && !(user?.email == board?.owner)) ||
+                (!board?.team?.includes(user?.email) && (
+                    <div
+                        className="column-main pl-5 pr-5"
+                        style={{width: "400px", height: "fit-content"}}
+                    >
+                        <Button
+                            icon={<FileAddOutlined />}
+                            onClick={() => {
+                                setaddColumnVisible(true);
+                            }}
+                        >
+                            Add New Column
+                        </Button>
+                    </div>
+                )):null}
         </>
     );
 }
-const mapStateToProps = ({board}) => ({
+const mapStateToProps = ({board, user}) => ({
     board: board?.board,
+    user: user?.user,
 });
 
 const mapDispatchToProps = {};

@@ -74,5 +74,82 @@ const fetchUser = (req, res) => {
             res.status(400).json({Error: "Something went wrong"});
         });
 };
+const updateUser = (req, res) => {
+    console.log(req.body);
+    const {token} = req.headers;
+    const {
+        fname,
+        lname,
+        password = "",
+        newPassword = "",
+        currentPassword,
+    } = req.body;
 
-module.exports = {register, login, fetchUser};
+    User.findOne({token}, (err, result) => {
+        if (err) res.status(400).json({message: "Invalid User"});
+
+        if (!!result) {
+            if (!!newPassword && newPassword.trim()) {
+                const match = bcrypt.compareSync(
+                    currentPassword,
+                    result.password
+                );
+                if (match) {
+                    const hash = bcrypt.hashSync(newPassword, 10);
+
+                    User.updateOne(
+                        {token},
+                        {
+                            $set: {
+                                password: hash,
+                                fname,
+                                lname,
+                            },
+                        },
+                        (err, raw) => {
+                            if (err) {
+                                res.status(400).json({
+                                    Error: "Failed to update",
+                                });
+                            }
+                            res.status(200).json({
+                                Message: "Success !",
+                            });
+                        }
+                    );
+                } else {
+                    res.status(400).json({Error: "Incorrect Password"});
+                }
+            } else {
+                const match = bcrypt.compareSync(password, result.password);
+                if (match) {
+                    User.updateOne(
+                        {token},
+                        {
+                            $set: {
+                                fname,
+                                lname,
+                            },
+                        },
+                        (err, raw) => {
+                            if (err) {
+                                res.status(400).json({
+                                    Error: "Failed to update",
+                                });
+                            }
+                            res.status(200).json({
+                                Message: "Success !",
+                            });
+                        }
+                    );
+                } else {
+                    res.status(400).json({Error: "Incorrect Password"});
+                }
+            }
+        }
+    });
+    if (!!newPassword.trim()) {
+    }
+};
+
+module.exports = {register, login, fetchUser, updateUser};
