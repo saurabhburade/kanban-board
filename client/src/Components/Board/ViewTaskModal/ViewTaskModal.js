@@ -145,7 +145,7 @@ function ViewTaskModal({
                                         return (
                                             <div className="checklist-item">
                                                 <Checkbox
-                                                    checked={element.checked}
+                                                    checked={element?.checked}
                                                     onChange={d =>
                                                         onCheck(
                                                             d,
@@ -154,12 +154,12 @@ function ViewTaskModal({
                                                         )
                                                     }
                                                 >
-                                                    {element.checked ? (
+                                                    {element?.checked ? (
                                                         <strike>
-                                                            {element.value}
+                                                            {element?.value}
                                                         </strike>
                                                     ) : (
-                                                        element.value
+                                                        element?.value
                                                     )}
                                                 </Checkbox>
                                             </div>
