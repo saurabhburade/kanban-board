@@ -9,7 +9,7 @@
         "@testing-library/user-event": "^7.1.2",
         "animate.css": "^4.1.0",
         "antd": "^4.5.4",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "bootstrap": "^4.5.2",
         "react": "^16.13.1",
         "react-beautiful-dnd": "^13.0.0",
